@@ -11,7 +11,11 @@ int main() {
   l.put(33, "4444");
   l.put(33, "h");
   l.put(19, "hhhh");
+  l.put(1000, "hhhh");
   l.remove(22);
   cout << *l.get(19) << endl << *l.get(33) << *l.get(33) << endl;
+  for (auto p = l.constBegin(); p != SkipList::constEnd(); ++p) {
+    cout << p.key() << ":" << p.value() << endl;
+  }
   return 0;
 }

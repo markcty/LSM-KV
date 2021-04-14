@@ -13,7 +13,11 @@
 using namespace std;
 
 class SkipList {
+
  private:
+  random_device rd;
+  mt19937 mt;
+
   struct Node {
     Node *right, *down;
     uint64_t key;
@@ -22,9 +26,16 @@ class SkipList {
     inline Node();
   };
   Node *head;
-  long size;
-  mt19937 *randomEngine;
-  bool shouldGrowUp();
+
+  // element numbers
+  unsigned long length;
+
+  // the number of bytes of keys and values occupy
+  unsigned long size;
+
+  // randomly generate a number to decide whether to grow up
+  inline bool shouldGrowUp();
+
  public:
   SkipList();
 
@@ -37,6 +48,26 @@ class SkipList {
   void remove(uint64_t key);
 
   void reset();
+
+  inline unsigned long getLength() const;
+
+  inline unsigned long getSize() const;
+
+  class Iterator {
+   public:
+    explicit Iterator(Node *_p);
+    const uint64_t &key();
+    const string &value();
+    Iterator operator++();
+    const Iterator operator++(int);
+    bool operator==(const Iterator &other) const;
+    bool operator!=(const Iterator &other) const;
+   private:
+    Node *p;
+  };
+
+  Iterator constBegin() const;
+  static Iterator constEnd();
 };
 
 #endif //LSM_KV__SKIPLIST_H_

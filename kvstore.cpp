@@ -38,4 +38,7 @@ bool KVStore::del(uint64_t key) {
  */
 void KVStore::reset() {
 }
+bool KVStore::memOverflow() const {
+  return false;
+}
 

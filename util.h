@@ -7,15 +7,18 @@
 
 #include <sstream>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <vector>
-#include <dirent.h>
 #include <sys/types.h>
 
 #ifdef _WIN32
 #include <direct.h>
 #include <stdio.h>
 #include <io.h>
+#include <windows.h>
+#endif
+#if defined(linux) || defined(__MINGW32__) || defined(__APPLE__)
+#include <dirent.h>
+#include <unistd.h>
 #endif
 
 namespace utils {
@@ -24,8 +27,8 @@ namespace utils {
  * @param path directory to be checked.
  * @return ture if directory exists, false otherwise.
  */
-bool dirExists(std::string path) {
-  struct stat st;
+bool dirExists(const std::string &path) {
+  struct stat st{};
   int ret = stat(path.c_str(), &st);
   return ret == 0 && st.st_mode & S_IFDIR;
 }
@@ -33,10 +36,37 @@ bool dirExists(std::string path) {
 /**
  * list all filename in a directory
  * @param path directory path.
- * @return name of all files.
+ * @param ret all files name in directory.
+ * @return files number.
  */
-std::vector<std::string> scanDir(std::string path) {
-  std::vector<std::string> ret;
+#if defined(_WIN32) && !defined(__MINGW32__)
+int scanDir(std::string path, std::vector<std::string> &ret){
+        std::string extendPath;
+        if(path[path.length() - 1] == '/'){
+            extendPath = path + "*";
+        }
+        else{
+            extendPath = path + "/*";
+        }
+        WIN32_FIND_DATA fd;
+        HANDLE h = FindFirstFileA(extendPath.c_str(), &fd);
+        if(h == INVALID_HANDLE_VALUE){
+            return 0;
+        }
+        while(true){
+            std::string ss(fd.cFileName);
+            if(ss[0] != '.'){
+                ret.push_back(ss);
+            }
+            if(FindNextFile(h, &fd) ==false){
+                break;
+            }
+        }
+        return ret.length();
+    }
+#endif
+#if defined(linux) || defined(__MINGW32__) || defined(__APPLE__)
+int scanDir(const std::string &path, std::vector<std::string> &ret) {
   DIR *dir;
   struct dirent *rent;
   dir = opendir(path.c_str());
@@ -44,11 +74,12 @@ std::vector<std::string> scanDir(std::string path) {
   while ((rent = readdir(dir))) {
     strcpy(s, rent->d_name);
     if (s[0] != '.') {
-      ret.push_back(s);
+      ret.emplace_back(s);
     }
   }
-  return ret;
+  return (int) ret.size();
 }
+#endif
 
 /**
  * Create directory
@@ -69,7 +100,7 @@ int _mkdir(const char *path) {
  * @return 0 if directory is created successfully, -1 otherwise.
  */
 int mkdir(const char *path) {
-  std::string currentPath = "";
+  std::string currentPath;
   std::string dirName;
   std::stringstream ss(path);
 
