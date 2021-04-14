@@ -6,7 +6,7 @@ CMakeFiles/LSM_KV.dir/SkipList.cpp.o: ../SkipList.h
 
 CMakeFiles/LSM_KV.dir/kvstore.cpp.o: ../kvstore.cpp
 CMakeFiles/LSM_KV.dir/kvstore.cpp.o: ../kvstore.h
-CMakeFiles/LSM_KV.dir/kvstore.cpp.o: ../kvstore_api.h
 
+CMakeFiles/LSM_KV.dir/main.cpp.o: ../SkipList.h
 CMakeFiles/LSM_KV.dir/main.cpp.o: ../main.cpp
 
