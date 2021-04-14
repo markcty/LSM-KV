@@ -1,0 +1,4 @@
+"/Users/markcty/Library/Application Support/JetBrains/Toolbox/apps/CLion-ARM/ch-0/211.6693.114/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/markcty/Repos/LSM-KV
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/markcty/Repos/LSM-KV/cmake-build-debug
