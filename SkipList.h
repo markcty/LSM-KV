@@ -28,11 +28,15 @@ class SkipList {
  public:
   SkipList();
 
+  ~SkipList();
+
   void put(uint64_t key, const string &value);
 
   const string *get(uint64_t key) const;
 
   void remove(uint64_t key);
+
+  void reset();
 };
 
 #endif //LSM_KV__SKIPLIST_H_

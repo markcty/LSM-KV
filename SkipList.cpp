@@ -91,3 +91,22 @@ void SkipList::remove(uint64_t key) {
 bool SkipList::shouldGrowUp() {
   return randomEngine->operator()() & 1;
 }
+
+void SkipList::reset() {
+  while (head) {
+    Node *t, *p;
+    t = p = head;
+    head = head->down;
+    while (p) {
+      t = p->right;
+      delete p;
+      p = t;
+    }
+  }
+  head = new Node();
+}
+
+SkipList::~SkipList() {
+  reset();
+  delete head;
+}
