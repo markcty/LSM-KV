@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/markcty/Repos/LSM-KV/cmake-build-debug"/>
+				<Option working_dir="/Users/markcty/repos/LSM-KV/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/markcty/Repos/LSM-KV/cmake-build-debug"/>
+				<Option working_dir="/Users/markcty/repos/LSM-KV/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/markcty/Repos/LSM-KV/cmake-build-debug"/>
+				<Option working_dir="/Users/markcty/repos/LSM-KV/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="LSM_KV">
-				<Option output="/Users/markcty/Repos/LSM-KV/cmake-build-debug/LSM_KV" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/markcty/Repos/LSM-KV/cmake-build-debug"/>
+				<Option output="/Users/markcty/repos/LSM-KV/cmake-build-debug/LSM_KV" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/markcty/repos/LSM-KV/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -51,15 +51,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 LSM_KV"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 LSM_KV"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="LSM_KV/fast">
-				<Option output="/Users/markcty/Repos/LSM-KV/cmake-build-debug/LSM_KV" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/markcty/Repos/LSM-KV/cmake-build-debug"/>
+				<Option output="/Users/markcty/repos/LSM-KV/cmake-build-debug/LSM_KV" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/markcty/repos/LSM-KV/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -71,44 +71,44 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 LSM_KV/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/Repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 LSM_KV/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/markcty/repos/LSM-KV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/MurmurHash3.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/MurmurHash3.h">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/SSTable.cpp">
+		<Unit filename="/Users/markcty/repos/LSM-KV/SSTable.cpp">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/SSTable.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/SSTable.h">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/SkipList.cpp">
+		<Unit filename="/Users/markcty/repos/LSM-KV/SkipList.cpp">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/SkipList.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/SkipList.h">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/kvstore.cpp">
+		<Unit filename="/Users/markcty/repos/LSM-KV/kvstore.cpp">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/kvstore.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/kvstore.h">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/kvstore_api.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/kvstore_api.h">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/main.cpp">
+		<Unit filename="/Users/markcty/repos/LSM-KV/main.cpp">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/util.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/util.h">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/Repos/LSM-KV/CMakeLists.txt">
+		<Unit filename="/Users/markcty/repos/LSM-KV/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

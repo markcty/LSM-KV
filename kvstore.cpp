@@ -33,3 +33,5 @@ bool KVStore::memOverflow() {
   return HeaderSize + BloomFilterSize + size + offSetSize > SSTableSize;
 }
 
+KVStore::~KVStore() = default;
+

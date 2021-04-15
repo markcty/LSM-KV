@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/markcty/Repos/LSM-KV/SSTable.cpp" "/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/SSTable.cpp.o"
-  "/Users/markcty/Repos/LSM-KV/SkipList.cpp" "/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/SkipList.cpp.o"
-  "/Users/markcty/Repos/LSM-KV/kvstore.cpp" "/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/kvstore.cpp.o"
-  "/Users/markcty/Repos/LSM-KV/main.cpp" "/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/main.cpp.o"
+  "/Users/markcty/repos/LSM-KV/SSTable.cpp" "/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/SSTable.cpp.o"
+  "/Users/markcty/repos/LSM-KV/SkipList.cpp" "/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/SkipList.cpp.o"
+  "/Users/markcty/repos/LSM-KV/kvstore.cpp" "/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/kvstore.cpp.o"
+  "/Users/markcty/repos/LSM-KV/main.cpp" "/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

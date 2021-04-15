@@ -62,10 +62,10 @@ RM = "/Users/markcty/Library/Application Support/JetBrains/Toolbox/apps/CLion-AR
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/markcty/Repos/LSM-KV
+CMAKE_SOURCE_DIR = /Users/markcty/repos/LSM-KV
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/markcty/Repos/LSM-KV/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/markcty/repos/LSM-KV/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/LSM_KV.dir/depend.make
@@ -78,55 +78,55 @@ include CMakeFiles/LSM_KV.dir/flags.make
 
 CMakeFiles/LSM_KV.dir/main.cpp.o: CMakeFiles/LSM_KV.dir/flags.make
 CMakeFiles/LSM_KV.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/LSM_KV.dir/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/main.cpp.o -c /Users/markcty/Repos/LSM-KV/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/LSM_KV.dir/main.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/main.cpp.o -c /Users/markcty/repos/LSM-KV/main.cpp
 
 CMakeFiles/LSM_KV.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LSM_KV.dir/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/Repos/LSM-KV/main.cpp > CMakeFiles/LSM_KV.dir/main.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/repos/LSM-KV/main.cpp > CMakeFiles/LSM_KV.dir/main.cpp.i
 
 CMakeFiles/LSM_KV.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_KV.dir/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/Repos/LSM-KV/main.cpp -o CMakeFiles/LSM_KV.dir/main.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/repos/LSM-KV/main.cpp -o CMakeFiles/LSM_KV.dir/main.cpp.s
 
 CMakeFiles/LSM_KV.dir/kvstore.cpp.o: CMakeFiles/LSM_KV.dir/flags.make
 CMakeFiles/LSM_KV.dir/kvstore.cpp.o: ../kvstore.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/LSM_KV.dir/kvstore.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/kvstore.cpp.o -c /Users/markcty/Repos/LSM-KV/kvstore.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/LSM_KV.dir/kvstore.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/kvstore.cpp.o -c /Users/markcty/repos/LSM-KV/kvstore.cpp
 
 CMakeFiles/LSM_KV.dir/kvstore.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LSM_KV.dir/kvstore.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/Repos/LSM-KV/kvstore.cpp > CMakeFiles/LSM_KV.dir/kvstore.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/repos/LSM-KV/kvstore.cpp > CMakeFiles/LSM_KV.dir/kvstore.cpp.i
 
 CMakeFiles/LSM_KV.dir/kvstore.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_KV.dir/kvstore.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/Repos/LSM-KV/kvstore.cpp -o CMakeFiles/LSM_KV.dir/kvstore.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/repos/LSM-KV/kvstore.cpp -o CMakeFiles/LSM_KV.dir/kvstore.cpp.s
 
 CMakeFiles/LSM_KV.dir/SkipList.cpp.o: CMakeFiles/LSM_KV.dir/flags.make
 CMakeFiles/LSM_KV.dir/SkipList.cpp.o: ../SkipList.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/LSM_KV.dir/SkipList.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/SkipList.cpp.o -c /Users/markcty/Repos/LSM-KV/SkipList.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/LSM_KV.dir/SkipList.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/SkipList.cpp.o -c /Users/markcty/repos/LSM-KV/SkipList.cpp
 
 CMakeFiles/LSM_KV.dir/SkipList.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LSM_KV.dir/SkipList.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/Repos/LSM-KV/SkipList.cpp > CMakeFiles/LSM_KV.dir/SkipList.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/repos/LSM-KV/SkipList.cpp > CMakeFiles/LSM_KV.dir/SkipList.cpp.i
 
 CMakeFiles/LSM_KV.dir/SkipList.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_KV.dir/SkipList.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/Repos/LSM-KV/SkipList.cpp -o CMakeFiles/LSM_KV.dir/SkipList.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/repos/LSM-KV/SkipList.cpp -o CMakeFiles/LSM_KV.dir/SkipList.cpp.s
 
 CMakeFiles/LSM_KV.dir/SSTable.cpp.o: CMakeFiles/LSM_KV.dir/flags.make
 CMakeFiles/LSM_KV.dir/SSTable.cpp.o: ../SSTable.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/LSM_KV.dir/SSTable.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/SSTable.cpp.o -c /Users/markcty/Repos/LSM-KV/SSTable.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/LSM_KV.dir/SSTable.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LSM_KV.dir/SSTable.cpp.o -c /Users/markcty/repos/LSM-KV/SSTable.cpp
 
 CMakeFiles/LSM_KV.dir/SSTable.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LSM_KV.dir/SSTable.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/Repos/LSM-KV/SSTable.cpp > CMakeFiles/LSM_KV.dir/SSTable.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/markcty/repos/LSM-KV/SSTable.cpp > CMakeFiles/LSM_KV.dir/SSTable.cpp.i
 
 CMakeFiles/LSM_KV.dir/SSTable.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_KV.dir/SSTable.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/Repos/LSM-KV/SSTable.cpp -o CMakeFiles/LSM_KV.dir/SSTable.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/markcty/repos/LSM-KV/SSTable.cpp -o CMakeFiles/LSM_KV.dir/SSTable.cpp.s
 
 # Object files for target LSM_KV
 LSM_KV_OBJECTS = \
@@ -144,7 +144,7 @@ LSM_KV: CMakeFiles/LSM_KV.dir/SkipList.cpp.o
 LSM_KV: CMakeFiles/LSM_KV.dir/SSTable.cpp.o
 LSM_KV: CMakeFiles/LSM_KV.dir/build.make
 LSM_KV: CMakeFiles/LSM_KV.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable LSM_KV"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable LSM_KV"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LSM_KV.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -157,6 +157,6 @@ CMakeFiles/LSM_KV.dir/clean:
 .PHONY : CMakeFiles/LSM_KV.dir/clean
 
 CMakeFiles/LSM_KV.dir/depend:
-	cd /Users/markcty/Repos/LSM-KV/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/markcty/Repos/LSM-KV /Users/markcty/Repos/LSM-KV /Users/markcty/Repos/LSM-KV/cmake-build-debug /Users/markcty/Repos/LSM-KV/cmake-build-debug /Users/markcty/Repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/markcty/repos/LSM-KV/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/markcty/repos/LSM-KV /Users/markcty/repos/LSM-KV /Users/markcty/repos/LSM-KV/cmake-build-debug /Users/markcty/repos/LSM-KV/cmake-build-debug /Users/markcty/repos/LSM-KV/cmake-build-debug/CMakeFiles/LSM_KV.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/LSM_KV.dir/depend
 

@@ -5,11 +5,11 @@
 #include "SkipList.h"
 
 SkipList::Node::Node(uint64_t _key, string _value, Node *_right, Node *_down)
-    : key(_key), value(std::move(_value)), right(_right), down(_down) {}
+    : right(_right), down(_down), key(_key), value(std::move(_value)) {}
 
-SkipList::Node::Node() : key(0), value(), right(nullptr), down(nullptr) {}
+SkipList::Node::Node() : right(nullptr), down(nullptr), key(0), value() {}
 
-SkipList::SkipList() : head(new Node), length(0), size(0), rd(), mt(rd()) {}
+SkipList::SkipList() : rd(), mt(rd()), head(new Node), length(0), size(0), {}
 
 void SkipList::put(uint64_t key, const string &value) {
   // if key exists, update the value of all nodes
