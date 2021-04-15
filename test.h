@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LSM_KV__TEST_H_
+#define LSM_KV__TEST_H_
 
 #include <iostream>
 #include <cstdint>
@@ -82,3 +83,5 @@ public:
 
 };
 const std::string Test::not_found = "";
+
+#endif //LSM_KV__TEST_H_
