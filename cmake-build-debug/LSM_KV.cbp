@@ -105,7 +105,7 @@
 		<Unit filename="/Users/markcty/repos/LSM-KV/main.cpp">
 			<Option target="LSM_KV"/>
 		</Unit>
-		<Unit filename="/Users/markcty/repos/LSM-KV/util.h">
+		<Unit filename="/Users/markcty/repos/LSM-KV/utils.h">
 			<Option target="LSM_KV"/>
 		</Unit>
 		<Unit filename="/Users/markcty/repos/LSM-KV/CMakeLists.txt">

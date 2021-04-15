@@ -9,7 +9,7 @@ SkipList::Node::Node(uint64_t _key, string _value, Node *_right, Node *_down)
 
 SkipList::Node::Node() : right(nullptr), down(nullptr), key(0), value() {}
 
-SkipList::SkipList() : rd(), mt(rd()), head(new Node), length(0), size(0), {}
+SkipList::SkipList() : rd(), mt(rd()), head(new Node), length(0), size(0) {}
 
 void SkipList::put(uint64_t key, const string &value) {
   // if key exists, update the value of all nodes

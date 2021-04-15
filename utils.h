@@ -2,8 +2,8 @@
 // Created by markcty on 2021/4/14.
 //
 
-#ifndef LSM_KV__UTIL_H_
-#define LSM_KV__UTIL_H_
+#ifndef LSM_KV__UTILS_H_
+#define LSM_KV__UTILS_H_
 
 #include <sstream>
 #include <sys/stat.h>
@@ -140,4 +140,4 @@ int rmfile(const char *path) {
 #endif
 }
 }
-#endif //LSM_KV__UTIL_H_
+#endif //LSM_KV__UTILS_H_
