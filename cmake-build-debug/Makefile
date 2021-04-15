@@ -142,6 +142,33 @@ LSM_KV/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LSM_KV.dir/build.make CMakeFiles/LSM_KV.dir/build
 .PHONY : LSM_KV/fast
 
+SSTable.o: SSTable.cpp.o
+
+.PHONY : SSTable.o
+
+# target to build an object file
+SSTable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LSM_KV.dir/build.make CMakeFiles/LSM_KV.dir/SSTable.cpp.o
+.PHONY : SSTable.cpp.o
+
+SSTable.i: SSTable.cpp.i
+
+.PHONY : SSTable.i
+
+# target to preprocess a source file
+SSTable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LSM_KV.dir/build.make CMakeFiles/LSM_KV.dir/SSTable.cpp.i
+.PHONY : SSTable.cpp.i
+
+SSTable.s: SSTable.cpp.s
+
+.PHONY : SSTable.s
+
+# target to generate assembly for a file
+SSTable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LSM_KV.dir/build.make CMakeFiles/LSM_KV.dir/SSTable.cpp.s
+.PHONY : SSTable.cpp.s
+
 SkipList.o: SkipList.cpp.o
 
 .PHONY : SkipList.o
@@ -232,6 +259,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... LSM_KV"
+	@echo "... SSTable.o"
+	@echo "... SSTable.i"
+	@echo "... SSTable.s"
 	@echo "... SkipList.o"
 	@echo "... SkipList.i"
 	@echo "... SkipList.s"

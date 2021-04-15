@@ -6,7 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/Users/markcty/Repos/LSM-KV/SkipList.cpp
+/Users/markcty/Repos/LSM-KV/SSTable.h
+fstream
+-
 SkipList.h
 /Users/markcty/Repos/LSM-KV/SkipList.h
 
@@ -19,4 +21,12 @@ utility
 -
 random
 -
+
+/Users/markcty/Repos/LSM-KV/main.cpp
+iostream
+-
+SkipList.h
+/Users/markcty/Repos/LSM-KV/SkipList.h
+SSTable.h
+/Users/markcty/Repos/LSM-KV/SSTable.h
 

@@ -54,20 +54,20 @@ void SkipList::put(uint64_t key, const string &value) {
   }
 
   length++;
-  size += 8 + value.size();
+  size += keySize + value.size();
 }
 
-const string *SkipList::get(uint64_t key) const {
+string SkipList::get(uint64_t key) const {
   Node *p = head;
   while (p) {
     while (p->right && p->right->key < key) p = p->right;
-    if (p->right && p->right->key == key) return &p->right->value;
+    if (p->right && p->right->key == key) return p->right->value;
     p = p->down;
   }
-  return nullptr;
+  return "";
 }
 
-void SkipList::remove(uint64_t key) {
+bool SkipList::remove(uint64_t key) {
   // search the key
   stack<Node *> path;
   Node *p = head;
@@ -77,22 +77,22 @@ void SkipList::remove(uint64_t key) {
     p = p->down;
   }
 
-  // if the key exists?
+  // Does the key exist?
   p = path.top()->right;
-  if (p && p->key == key) {
-    length--;
-    size -= 8 + p->value.length();
-  } else return;
+  if (!p || p->key != key) return false;
 
+  length--;
+  size -= keySize + p->value.length();
   // remove the tower
   while (!path.empty()) {
     p = path.top();
     path.pop();
     Node *t = p->right;
-    if (!t || t->key != key) return;
+    if (!t || t->key != key) return true;
     p->right = t->right;
     delete t;
   }
+  return true;
 }
 
 bool SkipList::shouldGrowUp() {
@@ -110,47 +110,47 @@ void SkipList::reset() {
     }
   }
   head = new Node();
+  length = 0;
+  size = 0;
 }
 
 SkipList::~SkipList() {
   reset();
   delete head;
-  length = 0;
-  size = 0;
+}
+
+SkipList::ConstIterator SkipList::constBegin() const {
+  Node *p = head;
+  while (p->down) p = p->down;
+  return SkipList::ConstIterator(p);
+}
+
+uint64_t SkipList::getMinKey() const {
+  Node *p = head;
+  while (p->down) p = p->down;
+  if (p->right) return p->right->key;
+  return 0;
+}
+
+uint64_t SkipList::getMaxKey() const {
+  Node *p = head;
+  while (p->down) {
+    while (p->right) p = p->right;
+    if (p->down) p = p->down;
+  }
+  return p->key;
 }
 
 unsigned long SkipList::getLength() const { return length; }
 
 unsigned long SkipList::getSize() const { return size; }
 
-SkipList::Iterator SkipList::constBegin() const {
-  Node *p = head;
-  while (p->down) p = p->down;
-  return SkipList::Iterator(p->right);
-}
+SkipList::ConstIterator::ConstIterator(SkipList::Node *_p) : p(_p) {}
 
-SkipList::Iterator SkipList::constEnd() { return SkipList::Iterator(nullptr); }
+const uint64_t &SkipList::ConstIterator::key() { return p->key; }
 
-SkipList::Iterator::Iterator(SkipList::Node *_p) : p(_p) {}
+const string &SkipList::ConstIterator::value() { return p->value; }
 
-const uint64_t &SkipList::Iterator::key() { return p->key; }
+bool SkipList::ConstIterator::hasNext() const { return p->right; }
 
-const string &SkipList::Iterator::value() { return p->value; }
-
-SkipList::Iterator SkipList::Iterator::operator++() {
-  p = p->right;
-  return *this;
-}
-
-bool SkipList::Iterator::operator==(const SkipList::Iterator &other) const { return p == other.p; }
-
-bool SkipList::Iterator::operator!=(const SkipList::Iterator &other) const { return p != other.p; }
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "readability-const-return-type"
-const SkipList::Iterator SkipList::Iterator::operator++(int) {
-  Iterator ret(p);
-  p++;
-  return ret;
-}
-#pragma clang diagnostic pop
+void SkipList::ConstIterator::next() { p = p->right; }

@@ -5,7 +5,14 @@
 #ifndef LSM_KV__KVSTORE_API_H_
 #define LSM_KV__KVSTORE_API_H_
 
+#include <string>
+#include <utility>
+
+using namespace std;
+
 class KVStoreAPI {
+ protected:
+  string dir;
  public:
   /**
    * You should put all sstables under `dir`.
@@ -13,7 +20,7 @@ class KVStoreAPI {
    * there. Please refer to the c++ filesystem library
    * (https://en.cppreference.com/w/cpp/filesystem).
    */
-  explicit KVStoreAPI(const std::string &dir) {}
+  explicit KVStoreAPI(std::string _dir) : dir(std::move(_dir)) {}
   KVStoreAPI() = delete;
 
   /**

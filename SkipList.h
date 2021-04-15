@@ -13,8 +13,9 @@
 using namespace std;
 
 class SkipList {
-
  private:
+  const int keySize = sizeof(uint64_t);
+
   random_device rd;
   mt19937 mt;
 
@@ -27,13 +28,10 @@ class SkipList {
   };
   Node *head;
 
-  // element numbers
   unsigned long length;
 
-  // the number of bytes of keys and values occupy
   unsigned long size;
 
-  // randomly generate a number to decide whether to grow up
   inline bool shouldGrowUp();
 
  public:
@@ -43,31 +41,32 @@ class SkipList {
 
   void put(uint64_t key, const string &value);
 
-  const string *get(uint64_t key) const;
+  string get(uint64_t key) const;
 
-  void remove(uint64_t key);
+  bool remove(uint64_t key);
 
   void reset();
 
-  inline unsigned long getLength() const;
+  unsigned long getLength() const;
 
-  inline unsigned long getSize() const;
+  unsigned long getSize() const;
 
-  class Iterator {
+  uint64_t getMinKey() const;
+
+  uint64_t getMaxKey() const;
+
+  class ConstIterator {
    public:
-    explicit Iterator(Node *_p);
+    explicit ConstIterator(Node *_p);
     const uint64_t &key();
     const string &value();
-    Iterator operator++();
-    const Iterator operator++(int);
-    bool operator==(const Iterator &other) const;
-    bool operator!=(const Iterator &other) const;
+    bool hasNext() const;
+    void next();
    private:
     Node *p;
   };
 
-  Iterator constBegin() const;
-  static Iterator constEnd();
+  ConstIterator constBegin() const;
 };
 
 #endif //LSM_KV__SKIPLIST_H_

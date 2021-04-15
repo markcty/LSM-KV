@@ -81,6 +81,12 @@
 		<Unit filename="/Users/markcty/Repos/LSM-KV/MurmurHash3.h">
 			<Option target="LSM_KV"/>
 		</Unit>
+		<Unit filename="/Users/markcty/Repos/LSM-KV/SSTable.cpp">
+			<Option target="LSM_KV"/>
+		</Unit>
+		<Unit filename="/Users/markcty/Repos/LSM-KV/SSTable.h">
+			<Option target="LSM_KV"/>
+		</Unit>
 		<Unit filename="/Users/markcty/Repos/LSM-KV/SkipList.cpp">
 			<Option target="LSM_KV"/>
 		</Unit>

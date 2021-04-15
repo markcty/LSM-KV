@@ -5,32 +5,19 @@
 #include "kvstore.h"
 #include <string>
 
-KVStore::KVStore(const std::string &dir) : KVStoreAPI(dir) {
+KVStore::KVStore(const string &dir) : KVStoreAPI(dir) {}
+
+void KVStore::put(uint64_t key, const string &value) {
+  memTable.put(key, value);
+  if (memOverflow()) {
+    if (!dirExists(dir + "/level-0")) mkdir((dir + "/level-0").c_str());
+    SSTable::toSSTable(memTable, dir + "/level-0/0.sst", 0);
+  }
 }
 
-KVStore::~KVStore() {
-}
+string KVStore::get(uint64_t key) { return memTable.get(key); }
 
-/**
- * Insert/Update the key-value pair.
- * No return values for simplicity.
- */
-void KVStore::put(uint64_t key, const std::string &s) {
-}
-/**
- * Returns the (string) value of the given key.
- * An empty string indicates not found.
- */
-std::string KVStore::get(uint64_t key) {
-  return "";
-}
-/**
- * Delete the given key-value pair if it exists.
- * Returns false iff the key is not found.
- */
-bool KVStore::del(uint64_t key) {
-  return false;
-}
+bool KVStore::del(uint64_t key) { return memTable.remove(key); }
 
 /**
  * This resets the kvstore. All key-value pairs should be removed,
@@ -38,7 +25,11 @@ bool KVStore::del(uint64_t key) {
  */
 void KVStore::reset() {
 }
-bool KVStore::memOverflow() const {
-  return false;
+
+bool KVStore::memOverflow() {
+  auto size = memTable.getSize();
+  auto length = memTable.getLength();
+  auto offSetSize = length * 4;
+  return HeaderSize + BloomFilterSize + size + offSetSize > SSTableSize;
 }
 

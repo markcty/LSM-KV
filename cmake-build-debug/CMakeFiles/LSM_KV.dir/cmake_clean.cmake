@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/LSM_KV.dir/SSTable.cpp.o"
   "CMakeFiles/LSM_KV.dir/SkipList.cpp.o"
   "CMakeFiles/LSM_KV.dir/kvstore.cpp.o"
   "CMakeFiles/LSM_KV.dir/main.cpp.o"
