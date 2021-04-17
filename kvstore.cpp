@@ -1,5 +1,5 @@
 #include "kvstore.h"
-
+#include "utils.h"
 
 KVStore::KVStore(const string &dir) : KVStoreAPI(dir) {}
 
