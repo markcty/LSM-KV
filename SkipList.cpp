@@ -1,7 +1,3 @@
-//
-// Created by markcty on 2021/4/14.
-//
-
 #include "SkipList.h"
 
 SkipList::Node::Node(uint64_t _key, string _value, Node *_right, Node *_down)
