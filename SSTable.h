@@ -1,13 +1,10 @@
-//
-// Created by markcty on 2021/4/15.
-//
-
 #ifndef LSM_KV__SSTABLE_H_
 #define LSM_KV__SSTABLE_H_
 
 #include <fstream>
 
 #include "SkipList.h"
+#include "BloomFilter.h"
 
 class SSTable {
  public:

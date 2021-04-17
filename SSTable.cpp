@@ -24,6 +24,8 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
   write64(max);
 
   // Bloom Filter
+  BloomFilter bloomFilter(memTable);
+  bloomFilter.write(out);
 
   // Key, Offset
   auto i = memTable.constBegin();
