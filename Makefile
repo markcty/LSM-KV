@@ -11,5 +11,5 @@ persistence: kvstore.o persistence.o
 try: BloomFilter.o SkipList.o SSTable.o kvstore.o try.o
 
 clean:
-	-rm -f correctness persistence *.o
+	-rm -f correctness persistence try *.o
 	-rm -rf data/*

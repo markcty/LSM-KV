@@ -1,1 +1,3 @@
 *.o
+*.sst
+.DS_Store

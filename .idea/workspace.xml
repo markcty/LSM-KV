@@ -17,14 +17,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7d198d6-30c2-402e-8903-b2a09a58819f" name="Default Changelist" comment="fix duplicate symbol">
+    <list default="true" id="c7d198d6-30c2-402e-8903-b2a09a58819f" name="Default Changelist" comment="finish bloom filter">
+      <change afterPath="$PROJECT_DIR$/correctness" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MurmurHash3.h" beforeDir="false" afterPath="$PROJECT_DIR$/MurmurHash3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkipList.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SkipList.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkipList.h" beforeDir="false" afterPath="$PROJECT_DIR$/SkipList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore_api.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore_api.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/try" beforeDir="false" afterPath="$PROJECT_DIR$/try" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +159,7 @@
       <updated>1618471458011</updated>
       <workItem from="1618471460469" duration="1236000" />
       <workItem from="1618486512291" duration="1443000" />
-      <workItem from="1618642958616" duration="1684000" />
+      <workItem from="1618642958616" duration="15726000" />
     </task>
     <task id="LOCAL-00001" summary="update Makefile">
       <created>1618471862900</created>
@@ -180,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618650373624</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="finish bloom filter">
+      <created>1618650743207</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1618650743207</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,17 +211,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update Makefile" />
     <MESSAGE value="fix duplicate symbol" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix duplicate symbol" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/BloomFilter.cpp</url>
-          <line>6</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="finish bloom filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish bloom filter" />
   </component>
 </project>

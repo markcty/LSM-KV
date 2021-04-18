@@ -1,7 +1,6 @@
 #include "SSTable.h"
 
 void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64_t timeStamp) {
-  ios_base::sync_with_stdio(false);
   ofstream out(fileName, ios::out | ios::binary | ios::trunc);
   if (out.fail()) throw runtime_error("Open file " + fileName + " failed!");
 
@@ -45,4 +44,41 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
   }
 
   out.close();
+}
+
+uint64_t SSTable::readTimeStamp(const string &fileName) {
+  ifstream in(fileName, ios_base::in | ios_base::binary);
+  uint64_t ret;
+  in >> ret;
+  in.close();
+  return ret;
+}
+
+void SSTable::readDic(const string &fileName, vector<pair<uint64_t, string>> &dic) {
+  ifstream in(fileName, ios_base::in | ios_base::binary);
+  uint64_t size;
+  in.seekg(8); // skip timeStamp
+  in >> size;
+  in.seekg(10272, ios_base::beg); // skip header and bloomFilter
+
+  // read keys and offsets
+  vector<uint64_t> keys;
+  vector<uint32_t> offsets; // TODO: delete offsets
+  for (int i = 0; i < size; i++) {
+    uint64_t key;
+    uint32_t offset;
+    in >> key >> offset;
+    keys.push_back(key);
+    offsets.push_back(offset);
+  }
+
+  // read values
+  for (int i = 0; i < size; i++) {
+    string value;
+    dic.emplace_back(keys[i], value);
+  }
+}
+
+void SSTable::toSSTable(const vector<pair<uint64_t, const string *>> &dic, const string &fileName, uint64_t timeStamp) {
+
 }
