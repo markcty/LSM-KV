@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
-  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated>
-      <config projectName="LSM-KV" targetName="all" />
-      <config projectName="LSM-KV" targetName="persistence" />
-      <config projectName="LSM-KV" targetName="try" />
-      <config projectName="LSM-KV" targetName="correctness" />
-    </generated>
-  </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7d198d6-30c2-402e-8903-b2a09a58819f" name="Default Changelist" comment="finish bloom filter">
-      <change afterPath="$PROJECT_DIR$/correctness" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/LSM-KV.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/saveactions_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/try" beforeDir="false" afterPath="$PROJECT_DIR$/try" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/configurationCache.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/dryrun.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/targets.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BloomFilter.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BloomFilter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MurmurHash3.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SkipList.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SkipList.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/correctness" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/correctness.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore_api.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/try" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/try.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,104 +45,44 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="MakefileLocalSettings">
-    <option name="availableProjects">
-      <map>
-        <entry>
-          <key>
-            <ExternalProjectPojo>
-              <option name="name" value="LSM-KV" />
-              <option name="path" value="$PROJECT_DIR$" />
-            </ExternalProjectPojo>
-          </key>
-          <value>
-            <list>
-              <ExternalProjectPojo>
-                <option name="name" value="LSM-KV" />
-                <option name="path" value="$PROJECT_DIR$" />
-              </ExternalProjectPojo>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="projectSyncType">
-      <map>
-        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectId" id="1rCE1Z2Xf7xuSkeDed9M1zrVGI1" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="1rOJGM28CZYrQiReoyLnkTZOSB3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="settings.saveactions" />
   </component>
-  <component name="RunManager" selected="Makefile Application.try">
+  <component name="RunManager" selected="CMake Application.LSM_KV">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM-KV" TARGET_NAME="all" CONFIG_NAME="all" version="1">
+    <configuration name="LSM_KV" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV_PERSISTENT" TARGET_NAME="LSM_KV" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV_PERSISTENT" RUN_TARGET_NAME="LSM_KV">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="clean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM-KV" TARGET_NAME="clean" CONFIG_NAME="clean" version="1">
+    <configuration name="LSM_KV_CORRECTNESS" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV_PERSISTENT" TARGET_NAME="LSM_KV_CORRECTNESS" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV_PERSISTENT" RUN_TARGET_NAME="LSM_KV_CORRECTNESS">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="correctness" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM-KV" TARGET_NAME="correctness" CONFIG_NAME="correctness" version="1">
+    <configuration name="LSM_KV_PERSISTENT" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV_PERSISTENT" TARGET_NAME="LSM_KV_PERSISTENT" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV_PERSISTENT" RUN_TARGET_NAME="LSM_KV_PERSISTENT">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="persistence" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM-KV" TARGET_NAME="persistence" CONFIG_NAME="persistence" version="1">
-      <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="try" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM-KV" TARGET_NAME="try" CONFIG_NAME="try" version="1" RUN_PATH="try">
-      <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
@@ -142,76 +91,24 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Makefile Application.clean" />
-      <item itemvalue="Makefile Application.all" />
-      <item itemvalue="Makefile Application.correctness" />
-      <item itemvalue="Makefile Application.persistence" />
-      <item itemvalue="Makefile Application.try" />
+      <item itemvalue="CMake Application.LSM_KV" />
+      <item itemvalue="CMake Application.LSM_KV_CORRECTNESS" />
+      <item itemvalue="CMake Application.LSM_KV_PERSISTENT" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c7d198d6-30c2-402e-8903-b2a09a58819f" name="Default Changelist" comment="" />
-      <created>1618471458011</created>
+      <changelist id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="" />
+      <created>1618841107431</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1618471458011</updated>
-      <workItem from="1618471460469" duration="1236000" />
-      <workItem from="1618486512291" duration="1443000" />
-      <workItem from="1618642958616" duration="15726000" />
+      <updated>1618841107431</updated>
+      <workItem from="1618841110645" duration="5000" />
     </task>
-    <task id="LOCAL-00001" summary="update Makefile">
-      <created>1618471862900</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1618471862900</updated>
-    </task>
-    <task id="LOCAL-00002" summary="fix duplicate symbol">
-      <created>1618633739101</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1618633739101</updated>
-    </task>
-    <task id="LOCAL-00003" summary="fix duplicate symbol">
-      <created>1618650373624</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1618650373624</updated>
-    </task>
-    <task id="LOCAL-00004" summary="finish bloom filter">
-      <created>1618650743207</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1618650743207</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update Makefile" />
-    <MESSAGE value="fix duplicate symbol" />
-    <MESSAGE value="finish bloom filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish bloom filter" />
   </component>
 </project>

@@ -4,23 +4,15 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
   ofstream out(fileName, ios::out | ios::binary | ios::trunc);
   if (out.fail()) throw runtime_error("Open file " + fileName + " failed!");
 
-  static auto write64 = [&out](uint64_t n) {
-    out.write((char *) &n, 8);
-  };
-
-  static auto write32 = [&out](uint32_t n) {
-    out.write((char *) &n, 4);
-  };
-
   auto length = memTable.getLength();
   auto min = memTable.getMinKey();
   auto max = memTable.getMaxKey();
 
   // Header
-  write64(timeStamp);
-  write64(length);
-  write64(min);
-  write64(max);
+  write64(out, timeStamp);
+  write64(out, length);
+  write64(out, min);
+  write64(out, max);
 
   // Bloom Filter
   BloomFilter bloomFilter(memTable);
@@ -31,8 +23,8 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
   uint32_t offset = 0;
   while (i.hasNext()) {
     i.next();
-    write64(i.key());
-    write32(offset);
+    write64(out, i.key());
+    write32(out, offset);
     offset += i.value().size();
   }
 
@@ -81,4 +73,12 @@ void SSTable::readDic(const string &fileName, vector<pair<uint64_t, string>> &di
 
 void SSTable::toSSTable(const vector<pair<uint64_t, const string *>> &dic, const string &fileName, uint64_t timeStamp) {
 
+}
+
+void SSTable::write64(ofstream &out, uint64_t n) {
+  out.write((char *) &n, 8);
+}
+
+void SSTable::write32(ofstream &out, uint32_t n) {
+  out.write((char *) &n, 4);
 }

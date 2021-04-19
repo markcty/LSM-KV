@@ -7,8 +7,10 @@
 #include "BloomFilter.h"
 
 class SSTable {
+ private:
+  static void write64(ofstream &out, uint64_t n);
+  static void write32(ofstream &out, uint32_t n);
  public:
-
   /**
     * convert a mem table to a SSTable file
     * @param memTable mem table
@@ -34,7 +36,7 @@ class SSTable {
     * read the timeStamp from a SSTable file
     * @param fileName file name
     * @param dic reference to dic
-    */
+    **/
   static void readDic(const string &fileName, vector<pair<uint64_t, string>> &dic);
 };
 

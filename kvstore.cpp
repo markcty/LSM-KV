@@ -13,7 +13,8 @@ void KVStore::put(uint64_t key, const string &value) {
     vector<string> existsFiles;
     utils::scanDir(dir + "/level-0", existsFiles);
 
-    SSTable::toSSTable(memTable, dir + "/level-0/" + to_string(existsFiles.size()) + ".sst", ++timeStamp);
+    SSTable::toSSTable(memTable, dir + "/level-0/" + to_string(timeStamp) + ".sst", timeStamp);
+    timeStamp++;
 
     memTable.reset();
 
@@ -74,15 +75,14 @@ void KVStore::compaction(int level) {
     pairs += dics[i].size();
   }
 
-  string fileName;
-
   // merge the dics
   // There are better algorithms, but since k is usually very small, and for simplicity,
   // I use the naive solution O(pairs * k)
   vector<int> indexes(k);
   vector<pair<uint64_t, const string *>> merged;
-  unsigned long mergedSize = 0; // key and value size in merged
-  while (pairs) {
+  unsigned long mergedSize = 0; // key and value size in merged used to check overflow
+  while (pairs--) {
+    // find min key among the dictionaries
     uint64_t minKey = UINT64_MAX, minIndex = 0;
     for (int i = 0; i < k; i++) {
       if (indexes[i] < dics[i].size() && dics[i][indexes[i]].first < minKey) {
@@ -90,13 +90,19 @@ void KVStore::compaction(int level) {
         minIndex = i;
       }
     }
+
+    // place the key,value pair in the merged vector
     const string *minValue = &dics[minIndex][indexes[minIndex]++].second;
     merged.emplace_back(minKey, minValue);
     mergedSize += sizeof(minKey) + minValue->size();
+
+    // check overflow, if so, convert it to a SSTable
     if (overflow(mergedSize, merged.size())) {
-      SSTable::toSSTable(merged, fileName, ++timeStamp);
+      SSTable::toSSTable(merged,
+                         dirName + to_string(timeStamp) + ".sst",
+                         timeStamp);
+      timeStamp++;
     }
-    pairs--;
   }
 
   compaction(level + 1);
