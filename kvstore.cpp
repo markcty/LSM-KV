@@ -22,7 +22,33 @@ void KVStore::put(uint64_t key, const string &value) {
   }
 }
 
-string KVStore::get(uint64_t key) { return memTable.get(key); }
+string KVStore::get(uint64_t key) {
+  auto value = memTable.get(key);
+  if (!value.empty()) return value;
+  int level = 0;
+  auto dirName = dir + "/level-0";
+  while (utils::dirExists(dirName)) {
+    vector<string> dirFiles;
+    utils::scanDir(dirName, dirFiles);
+    for (string &name:dirFiles) name.insert(0, dirName + '/');
+
+    string ans;
+    auto minTime = UINT64_MAX;
+    for (const auto &file:dirFiles) {
+      vector<pair<uint64_t, string>> dic;
+      SSTable::readDic(file, dic);
+      auto time = SSTable::readTimeStamp(file);
+      for (const auto &pair:dic)
+        if (pair.first == key && time < minTime) {
+          minTime = time;
+          ans = pair.second;
+        }
+    }
+    if (!ans.empty()) return ans;
+    dirName = dir + "/level-" + to_string(++level);
+  }
+  return "";
+}
 
 bool KVStore::del(uint64_t key) { return memTable.remove(key); }
 
@@ -49,10 +75,7 @@ void KVStore::compaction(int level) {
   int maxFiles = pow2(level + 1), files = utils::scanDir(dirName, dirFiles);
   if (files <= maxFiles) return;
 
-  transform(dirFiles.begin(),
-            dirFiles.end(),
-            dirFiles.begin(),
-            [&dirName](string &name) { return dirName + "/" + name; });
+  for (string &name:dirFiles) name.insert(0, dirName + '/');
   // get the files which need compaction
   vector<string> compactionFiles;
   if (level == 0) compactionFiles = dirFiles;

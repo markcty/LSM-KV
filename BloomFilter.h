@@ -13,6 +13,7 @@ class BloomFilter {
  public:
   explicit BloomFilter(const SkipList &memTable);
   explicit BloomFilter(const vector<pair<uint64_t, const string *>> &dic);
+  explicit BloomFilter(ifstream &in);
   void write(ofstream &out);
 };
 
