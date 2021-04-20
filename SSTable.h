@@ -2,6 +2,7 @@
 #define LSM_KV__SSTABLE_H_
 
 #include <fstream>
+#include <sys/stat.h>
 
 #include "SkipList.h"
 #include "BloomFilter.h"
@@ -10,6 +11,9 @@ class SSTable {
  private:
   static void write64(ofstream &out, uint64_t n);
   static void write32(ofstream &out, uint32_t n);
+  static void read64(ifstream &in, uint64_t &n);
+  static void read32(ifstream &in, uint32_t &n);
+
  public:
   /**
     * convert a mem table to a SSTable file

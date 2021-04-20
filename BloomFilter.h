@@ -9,9 +9,10 @@ using namespace std;
 
 class BloomFilter {
  private:
-  bitset<10240> bits;
+  bitset<10240 * 8> bits;
  public:
   explicit BloomFilter(const SkipList &memTable);
+  explicit BloomFilter(const vector<pair<uint64_t, const string *>> &dic);
   void write(ofstream &out);
 };
 

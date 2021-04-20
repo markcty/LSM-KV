@@ -40,7 +40,8 @@ bool KVStore::overflow(unsigned long size, unsigned long length) {
 }
 
 void KVStore::compaction(int level) {
-  string dirName = "/level-" + to_string(level);
+  string dirName = dir + "/level-" + to_string(level);
+  string nextLevelDirName = dir + "/level-" + to_string(level + 1);
 
   if (!utils::dirExists(dirName)) return;
 
@@ -48,12 +49,17 @@ void KVStore::compaction(int level) {
   int maxFiles = pow2(level + 1), files = utils::scanDir(dirName, dirFiles);
   if (files <= maxFiles) return;
 
+  transform(dirFiles.begin(),
+            dirFiles.end(),
+            dirFiles.begin(),
+            [&dirName](string &name) { return dirName + "/" + name; });
   // get the files which need compaction
   vector<string> compactionFiles;
   if (level == 0) compactionFiles = dirFiles;
   else {
     // find the files with smallest timeStamp
-    vector<pair<uint64_t, int>> timeStamps(dirFiles.size());
+    vector<pair<uint64_t, int>> timeStamps;
+    timeStamps.reserve(dirFiles.size());
     for (int i = 0; i < dirFiles.size(); i++)
       timeStamps.emplace_back(SSTable::readTimeStamp(dirFiles[i]), i);
 
@@ -72,6 +78,7 @@ void KVStore::compaction(int level) {
   vector<vector<pair<uint64_t, string>>> dics(compactionFiles.size());
   for (int i = 0; i < k; i++) {
     SSTable::readDic(compactionFiles[i], dics[i]);
+    utils::rmfile(compactionFiles[i].c_str());
     pairs += dics[i].size();
   }
 
@@ -98,10 +105,13 @@ void KVStore::compaction(int level) {
 
     // check overflow, if so, convert it to a SSTable
     if (overflow(mergedSize, merged.size())) {
+      if (!utils::dirExists(nextLevelDirName)) utils::mkdir(nextLevelDirName.c_str());
       SSTable::toSSTable(merged,
-                         dirName + to_string(timeStamp) + ".sst",
+                         nextLevelDirName + "/" + to_string(timeStamp) + ".sst",
                          timeStamp);
       timeStamp++;
+      merged.clear();
+      mergedSize = 0;
     }
   }
 
