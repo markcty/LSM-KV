@@ -6,8 +6,7 @@ KVStore::KVStore(const string &dir) : KVStoreAPI(dir), timeStamp(0) {
 }
 
 void KVStore::put(uint64_t key, const string &value) {
-  memTable.put(key, value);
-  if (overflow(memTable.getSize(), memTable.getLength())) {
+  if (overflow(memTable.getSize() + 8 + value.size(), memTable.getLength() + 1)) {
     if (!utils::dirExists(dir + "/level-0")) utils::mkdir((dir + "/level-0").c_str());
 
     vector<string> existsFiles;
@@ -20,6 +19,7 @@ void KVStore::put(uint64_t key, const string &value) {
 
     compaction(0);
   }
+  memTable.put(key, value);
 }
 
 string KVStore::get(uint64_t key) {
@@ -50,7 +50,13 @@ string KVStore::get(uint64_t key) {
   return "";
 }
 
-bool KVStore::del(uint64_t key) { return memTable.remove(key); }
+bool KVStore::del(uint64_t key) {
+  auto value = get(key);
+  if (value.empty()) return false;
+  memTable.remove(key);
+  memTable.put(key, "~DELETED~");
+  return true;
+}
 
 /*
  * This resets the kvstore. All key-value pairs should be removed,
@@ -62,7 +68,7 @@ void KVStore::reset() {
 
 bool KVStore::overflow(unsigned long size, unsigned long length) {
   auto offSetSize = length * 4;
-  return HeaderSize + BloomFilterSize + size + offSetSize > SSTableSize;
+  return HeaderSize + BloomFilterSize + size + offSetSize >= SSTableSize;
 }
 
 void KVStore::compaction(int level) {
