@@ -130,10 +130,8 @@ uint64_t SkipList::getMinKey() const {
 
 uint64_t SkipList::getMaxKey() const {
   Node *p = head;
-  while (p->down) {
-    while (p->right) p = p->right;
-    if (p->down) p = p->down;
-  }
+  while (p->down) p = p->down;
+  while (p->right) p = p->right;
   return p->key;
 }
 

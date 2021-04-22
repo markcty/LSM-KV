@@ -96,11 +96,12 @@ void KVStore::compaction(int level) {
     auto cmp = [](const nameHeader &left, const nameHeader &right) {
       const auto &lHeader = left.second;
       const auto &rHeader = right.second;
-      return (lHeader.timeStamp < rHeader.timeStamp ||
+      return (lHeader.timeStamp > rHeader.timeStamp ||
           (lHeader.timeStamp == rHeader.timeStamp && lHeader.minKey > rHeader.minKey));
     };
     priority_queue<nameHeader, vector<nameHeader>, decltype(cmp)> q(cmp);
     int k = fileNum - maxFileNum;
+    for (const auto &file:dirFiles) q.emplace(file, SSTable::readHeader(file));
     while (k--) {
       auto top = q.top();
       q.pop();
@@ -109,10 +110,10 @@ void KVStore::compaction(int level) {
     }
   }
 
-  uint64_t minDic = UINT64_MAX, maxKey = 0, maxTimeStamp = 0;
+  uint64_t minKey = UINT64_MAX, maxKey = 0, maxTimeStamp = 0;
   for (const auto &header:compactionHeaders) {
     maxKey = max(header.maxKey, maxKey);
-    minDic = min(header.minKey, minDic);
+    minKey = min(header.minKey, minKey);
     maxTimeStamp = max(header.timeStamp, maxTimeStamp);
   }
 
@@ -121,10 +122,11 @@ void KVStore::compaction(int level) {
   if (!utils::dirExists(nextDir)) utils::mkdir(nextDir.c_str());
   dirFiles.clear();
   utils::scanDir(nextDir, dirFiles);
+  for (string &name:dirFiles) name.insert(0, nextDir + '/');
   for (const auto &file:dirFiles) {
     auto header = SSTable::readHeader(file);
-    if ((minDic <= header.minKey && header.minKey <= maxKey)
-        || (minDic <= header.maxKey && header.maxKey <= maxKey)) {
+    if ((minKey <= header.minKey && header.minKey <= maxKey)
+        || (minKey <= header.maxKey && header.maxKey <= maxKey)) {
       compactionFiles.push_back(file);
       maxTimeStamp = max(maxTimeStamp, header.timeStamp);
     }
@@ -149,15 +151,15 @@ void KVStore::compaction(int level) {
   unsigned long mergedSize = 0; // key and value size in mergedDic used to check overflow
   auto nameIndex = 0;
   while (pairNum--) {
-    minDic = UINT64_MAX;
-    auto minIndex = 0;
+    minKey = UINT64_MAX;
+    auto minDic = 0;
     for (int i = 0; i < k; i++) {
-      if (indices[i] < dics[i].size() && dics[i].at(indices[i]).first < minDic) {
-        minDic = dics[i].at(indices[i]).first;
-        minIndex = i;
+      if (indices[i] < dics[i].size() && dics[i].at(indices[i]).first < minKey) {
+        minKey = dics[i].at(indices[i]).first;
+        minDic = i;
       }
     }
-    const auto &pair = dics[minIndex].at(indices[minIndex]);
+    const auto &pair = dics[minDic].at(indices[minDic]++);
     if (overflow(mergedSize + 8 + pair.second.size(), mergedDic.size() + 1)) {
       SSTable::toSSTable(mergedDic,
                          nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++),
@@ -165,9 +167,14 @@ void KVStore::compaction(int level) {
       mergedSize = 0;
       mergedDic.clear();
     }
+    mergedSize += 8 + pair.second.size();
     mergedDic.emplace_back(pair.first, pair.second);
   }
-
+  if (mergedSize > 0) {
+    SSTable::toSSTable(mergedDic,
+                       nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++),
+                       maxTimeStamp);
+  }
   compaction(level + 1);
 }
 
@@ -176,71 +183,6 @@ int KVStore::pow2(int n) {
   for (int i = 0; i < n; i++) ret *= 2;
   return ret;
 }
-
-//void KVStore::compaction0() {
-//  string dir = storagePath + "/level-0";
-//  vector<string> dirFiles;
-//  auto fileNum = utils::scanDir(dir, dirFiles);
-//  if (fileNum <= 2) return;
-//
-//  // get key range in leve l0
-//  uint64_t minDic = UINT64_MAX, maxKey = 0, maxTimeStamp = 0;
-//  for (const auto &file:dirFiles) {
-//    auto header = SSTable::readHeader(file);
-//    maxKey = max(header.maxKey, maxKey);
-//    minDic = min(header.minKey, minDic);
-//    maxTimeStamp = max(header.timeStamp, maxTimeStamp);
-//  }
-//
-//  // get SSTables in level 1 involved in compaction
-//  string nextDir = storagePath + "/level-1";
-//  if (!utils::dirExists(nextDir)) utils::mkdir(nextDir.c_str());
-//  vector<string> compactionFiles(dirFiles); // put all files in level 0 in files need compactions
-//  dirFiles.clear();
-//  for (const auto &file:dirFiles) {
-//    auto header = SSTable::readHeader(file);
-//    if ((minDic <= header.minKey && header.minKey <= maxKey)
-//        || (minDic <= header.maxKey && header.maxKey <= maxKey)) {
-//      compactionFiles.push_back(file);
-//      maxTimeStamp = max(maxTimeStamp, header.timeStamp);
-//    }
-//  }
-//
-//  // read all key value pairs from SSTables
-//  auto k = compactionFiles.size();
-//  unsigned long pairNum = 0;
-//  vector<SSTableDic> dics;
-//  dics.reserve(k);
-//  for (int i = 0; i < k; i++) {
-//    SSTable::readDic(compactionFiles[i], dics[i]);
-//    pairNum += dics[i].size();
-//  }
-//
-//  // merge all key value pairs, convert to SSTables
-//  SSTableDic mergedDic;
-//  unsigned long mergedSize = 0;
-//  int nameIndex = 0;
-//  vector<int> indices(k);
-//  while (pairNum--) {
-//    minDic = UINT64_MAX;
-//    auto minIndex = 0;
-//    for (int i = 0; i < k; i++) {
-//      if (indices[i] < dics[i].size() && dics[i].at(indices[i]).first < minDic) {
-//        minDic = dics[i].at(indices[i]).first;
-//        minIndex = i;
-//      }
-//    }
-//    const auto &pair = dics[minIndex].at(indices[minIndex]);
-//    if (overflow(mergedSize + 8 + pair.second.size(), mergedDic.size() + 1)) {
-//      SSTable::toSSTable(mergedDic, nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++), maxTimeStamp);
-//      mergedSize = 0;
-//      mergedDic.clear();
-//    }
-//    mergedDic.emplace_back(pair.first, pair.second);
-//  }
-//
-//  compaction(1);
-//}
 
 KVStore::~KVStore() = default;
 

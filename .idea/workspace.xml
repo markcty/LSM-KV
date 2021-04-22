@@ -16,16 +16,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="finish del(not tested yet)">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="bug duplicate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BloomFilter.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BloomFilter.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MurmurHash3.h" beforeDir="false" afterPath="$PROJECT_DIR$/MurmurHash3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SkipList.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SkipList.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore_api.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore_api.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,11 +69,6 @@
     <property name="settings.editor.selected.configurable" value="settings.saveactions" />
   </component>
   <component name="RunManager" selected="CMake Application.LSM_KV">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LSM_KV" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -89,6 +80,11 @@
       </method>
     </configuration>
     <configuration name="LSM_KV_PERSISTENT" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV_PERSISTENT" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV_PERSISTENT">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -116,7 +112,8 @@
       <workItem from="1618907940291" duration="4269000" />
       <workItem from="1618976972410" duration="1268000" />
       <workItem from="1618989334893" duration="14639000" />
-      <workItem from="1619049792942" duration="3831000" />
+      <workItem from="1619049792942" duration="4419000" />
+      <workItem from="1619054853886" duration="2969000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -146,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618993787260</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="bug duplicate">
+      <created>1619054285860</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1619054285860</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,9 +173,25 @@
     <MESSAGE value="finish compaction" />
     <MESSAGE value="add naive get method" />
     <MESSAGE value="finish del(not tested yet)" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish del(not tested yet)" />
+    <MESSAGE value="bug duplicate" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug duplicate" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
+          <line>39</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <condition expression="level==2" language="ObjectiveC" />
+          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
+          <line>87</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="timeStamp" language="ObjectiveC" />
