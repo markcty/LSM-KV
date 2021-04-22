@@ -8,8 +8,21 @@ int main() {
   srand(time(0));
   KVStore store("../data");
   vector<uint64_t> keys;
-  for (uint64_t i = 0; i < 80000000; i++) store.put(1, to_string(i));
+  for (uint64_t i = 0; i < 5; i++) store.put(i, to_string(i));
   cout << store.get(1) << endl;
+  cout << store.get(2) << endl;
+  cout << store.get(3) << endl;
+  cout << store.get(4) << endl;
+  cout << store.get(0) << endl;
+  store.del(3);
+  store.del(1);
+  cout << store.get(1) << endl;
+  cout << store.get(2) << endl;
+  cout << store.get(3) << endl;
+  cout << store.get(4) << endl;
+  cout << store.get(0) << endl;
+
+
 //  cout << store.get(5) << endl;
 //  cout << store.get(17736) << endl;
 //  cout << store.get(572736) << endl;

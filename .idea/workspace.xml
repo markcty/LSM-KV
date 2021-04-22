@@ -16,7 +16,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="fix duplicate bug, compaction bugs">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="fix same key bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
@@ -72,7 +72,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LSM_KV_CORRECTNESS" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV_CORRECTNESS" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV_CORRECTNESS">
+    <configuration name="LSM_KV_CORRECTNESS" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-v" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV_CORRECTNESS" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV_CORRECTNESS">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -80,16 +80,6 @@
     <configuration name="LSM_KV_PERSISTENT" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV_PERSISTENT" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV_PERSISTENT">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
@@ -111,7 +101,9 @@
       <workItem from="1618976972410" duration="1268000" />
       <workItem from="1618989334893" duration="14639000" />
       <workItem from="1619049792942" duration="4419000" />
-      <workItem from="1619054853886" duration="4202000" />
+      <workItem from="1619054853886" duration="4644000" />
+      <workItem from="1619070210045" duration="5000" />
+      <workItem from="1619070898964" duration="1033000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -155,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619059054278</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix same key bug">
+      <created>1619060211241</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1619060211241</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,21 +179,26 @@
     <MESSAGE value="finish del(not tested yet)" />
     <MESSAGE value="bug duplicate" />
     <MESSAGE value="fix duplicate bug, compaction bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix duplicate bug, compaction bugs" />
+    <MESSAGE value="fix same key bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix same key bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/kvstore.cpp</url>
-          <line>39</line>
-          <option name="timeStamp" value="21" />
+          <line>27</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <condition expression="level==2" language="ObjectiveC" />
           <url>file://$PROJECT_DIR$/kvstore.cpp</url>
-          <line>87</line>
-          <option name="timeStamp" value="22" />
+          <line>45</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
+          <line>56</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

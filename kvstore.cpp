@@ -26,6 +26,7 @@ void KVStore::put(uint64_t key, const string &value) {
 
 string KVStore::get(uint64_t key) {
   auto value = memTable.get(key);
+  if (value == "~DELETED~") return "";
   if (!value.empty()) return value;
   int level = 0;
   auto dirName = storagePath + "/level-0";
@@ -41,7 +42,7 @@ string KVStore::get(uint64_t key) {
       SSTable::readDic(file, dic);
       auto time = SSTable::readHeader(file).timeStamp;
       for (const auto &pair:dic)
-        if (pair.first == key && time < minTime) {
+        if (pair.first == key && pair.second != "~DELETED~" && time < minTime) {
           minTime = time;
           ans = pair.second;
         }
