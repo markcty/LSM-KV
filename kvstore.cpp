@@ -128,6 +128,7 @@ void KVStore::compaction(int level) {
     if ((minKey <= header.minKey && header.minKey <= maxKey)
         || (minKey <= header.maxKey && header.maxKey <= maxKey)) {
       compactionFiles.push_back(file);
+      compactionHeaders.push_back(header);
       maxTimeStamp = max(maxTimeStamp, header.timeStamp);
     }
   }
@@ -144,12 +145,11 @@ void KVStore::compaction(int level) {
   }
 
   // merge the dics, convert to SSTables
-  // There are better algorithms, but since k is usually very small, and for simplicity,
-  // I use the naive solution O(pairNum * k)
   vector<int> indices(k);
   SSTableDic mergedDic;
   unsigned long mergedSize = 0; // key and value size in mergedDic used to check overflow
   auto nameIndex = 0;
+  uint64_t lastTimeStamp = 0;
   while (pairNum--) {
     minKey = UINT64_MAX;
     auto minDic = 0;
@@ -167,8 +167,12 @@ void KVStore::compaction(int level) {
       mergedSize = 0;
       mergedDic.clear();
     }
-    mergedSize += 8 + pair.second.size();
+    if (!mergedDic.empty() && pair.first == mergedDic.back().first
+        && compactionHeaders[minDic].timeStamp < lastTimeStamp)
+      continue;
     mergedDic.emplace_back(pair.first, pair.second);
+    lastTimeStamp = minDic;
+    mergedSize += 8 + pair.second.size();
   }
   if (mergedSize > 0) {
     SSTable::toSSTable(mergedDic,

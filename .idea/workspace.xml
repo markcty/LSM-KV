@@ -16,10 +16,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="bug duplicate">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="fix duplicate bug, compaction bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MurmurHash3.h" beforeDir="false" afterPath="$PROJECT_DIR$/MurmurHash3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkipList.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SkipList.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
@@ -113,7 +111,7 @@
       <workItem from="1618976972410" duration="1268000" />
       <workItem from="1618989334893" duration="14639000" />
       <workItem from="1619049792942" duration="4419000" />
-      <workItem from="1619054853886" duration="2969000" />
+      <workItem from="1619054853886" duration="4202000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -150,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619054285860</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix duplicate bug, compaction bugs">
+      <created>1619059054278</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619059054278</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,7 +179,8 @@
     <MESSAGE value="add naive get method" />
     <MESSAGE value="finish del(not tested yet)" />
     <MESSAGE value="bug duplicate" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug duplicate" />
+    <MESSAGE value="fix duplicate bug, compaction bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix duplicate bug, compaction bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
