@@ -2,10 +2,29 @@
 #define LSM_KV__SSTABLE_H_
 
 #include <fstream>
-#include <sys/stat.h>
+#include <bitset>
+#include <algorithm>
 
 #include "SkipList.h"
-#include "BloomFilter.h"
+
+using SSTableDic = vector<pair<uint64_t, string>>;
+
+class SSTableHeader {
+ public:
+  uint64_t timeStamp, size, minKey, maxKey;
+  explicit SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey, uint64_t _maxKey);
+  SSTableHeader(const SSTableHeader &other);
+};
+
+class BloomFilter {
+ private:
+  bitset<10240 * 8> bits;
+ public:
+  explicit BloomFilter(const SkipList &memTable);
+  explicit BloomFilter(const SSTableDic &dic);
+  explicit BloomFilter(ifstream &in);
+  void write(ofstream &out);
+};
 
 class SSTable {
  private:
@@ -27,21 +46,21 @@ class SSTable {
     * @param memTable mem table
     * @param fileName file name
     **/
-  static void toSSTable(const vector<pair<uint64_t, const string *>> &dic, const string &fileName, uint64_t timeStamp);
+  static void toSSTable(const SSTableDic &dic, const string &fileName, uint64_t timeStamp);
 
   /**
    * read the timeStamp from a SSTable file
    * @param fileName file name
    * @return timeStamp of SSTable
    **/
-  static uint64_t readTimeStamp(const string &fileName);
+  static SSTableHeader readHeader(const string &fileName);
 
   /**
     * read the timeStamp from a SSTable file
     * @param fileName file name
     * @param dic reference to dic
     **/
-  static void readDic(const string &fileName, vector<pair<uint64_t, string>> &dic);
+  static void readDic(const string &fileName, SSTableDic &dic);
 };
 
 #endif //LSM_KV__SSTABLE_H_

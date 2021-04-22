@@ -7,8 +7,6 @@
 using namespace std;
 
 class KVStoreAPI {
- protected:
-  string dir;
  public:
   /**
    * You should put all sstables under `dir`.
@@ -16,7 +14,7 @@ class KVStoreAPI {
    * there. Please refer to the c++ filesystem library
    * (https://en.cppreference.com/w/cpp/filesystem).
    */
-  explicit KVStoreAPI(std::string _dir) : dir(std::move(_dir)) {}
+  explicit KVStoreAPI(const std::string &storagePath) {}
   KVStoreAPI() = delete;
 
   /**
