@@ -18,7 +18,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="delete deleted keys at last level">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/correctness.cc" beforeDir="false" afterPath="$PROJECT_DIR$/correctness.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +44,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/utils.h" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1rOJGM28CZYrQiReoyLnkTZOSB3" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -66,7 +70,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="settings.saveactions" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="CMake Application.LSM_KV_CORRECTNESS">
     <configuration name="LSM_KV" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV">
@@ -111,6 +115,9 @@
       <workItem from="1619054853886" duration="4644000" />
       <workItem from="1619070210045" duration="5000" />
       <workItem from="1619070898964" duration="3901000" />
+      <workItem from="1619094452665" duration="33000" />
+      <workItem from="1619094492933" duration="65000" />
+      <workItem from="1619094564203" duration="2070000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
