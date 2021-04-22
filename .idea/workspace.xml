@@ -16,10 +16,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="fix same key bug">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="fix del bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/correctness.cc" beforeDir="false" afterPath="$PROJECT_DIR$/correctness.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +30,9 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -66,7 +69,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.saveactions" />
   </component>
-  <component name="RunManager" selected="CMake Application.LSM_KV">
+  <component name="RunManager" selected="CMake Application.LSM_KV_CORRECTNESS">
     <configuration name="LSM_KV" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -103,7 +106,7 @@
       <workItem from="1619049792942" duration="4419000" />
       <workItem from="1619054853886" duration="4644000" />
       <workItem from="1619070210045" duration="5000" />
-      <workItem from="1619070898964" duration="1033000" />
+      <workItem from="1619070898964" duration="2941000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -154,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619060211241</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fix del bug">
+      <created>1619071978933</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1619071978933</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,32 +190,27 @@
     <MESSAGE value="bug duplicate" />
     <MESSAGE value="fix duplicate bug, compaction bugs" />
     <MESSAGE value="fix same key bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix same key bug" />
+    <MESSAGE value="fix del bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix del bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
-          <line>27</line>
-          <option name="timeStamp" value="23" />
+          <url>file://$PROJECT_DIR$/correctness.cc</url>
+          <line>62</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
-          <line>45</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
-          <line>56</line>
-          <option name="timeStamp" value="25" />
+          <url>file://$PROJECT_DIR$/correctness.cc</url>
+          <line>29</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="timeStamp" language="ObjectiveC" />
-        <watch expression="memTable.get(3);" language="ObjectiveC" />
+        <watch expression="store" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>

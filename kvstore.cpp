@@ -137,6 +137,11 @@ void KVStore::compaction(int level) {
   const auto k = compactionFiles.size();
   unsigned long pairNum = 0;
 
+  // check if it is the last level
+  bool lastLevel = false;
+  if (!utils::dirExists(storagePath + "/level1-" + to_string(level + 2))) lastLevel = true;
+
+
   // read dictionaries from dics
   vector<vector<pair<uint64_t, string>>> dics(compactionFiles.size());
   for (int i = 0; i < k; i++) {
@@ -170,11 +175,14 @@ void KVStore::compaction(int level) {
     }
     if (!mergedDic.empty() && pair.first == mergedDic.back().first
         && compactionHeaders[minDic].timeStamp < lastTimeStamp)
-      continue;
+      continue;  // duplicate keys, select the one with the largest timeStamp
+    if (lastLevel && pair.second == "~DELETED~") continue; // last level should not contain deleted keys
     mergedDic.emplace_back(pair.first, pair.second);
     lastTimeStamp = minDic;
     mergedSize += 8 + pair.second.size();
   }
+
+  // convert the remaining key value pairs to a SSTable
   if (mergedSize > 0) {
     SSTable::toSSTable(mergedDic,
                        nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++),
