@@ -25,7 +25,7 @@ class CorrectnessTest : public Test {
     // Test multiple key-value pairs
     for (i = 0; i < max; ++i) {
       store.put(i, std::string(i + 1, 's'));
-//      EXPECT(std::string(i + 1, 's'), store.get(i));
+      EXPECT(std::string(i + 1, 's'), store.get(i));
     }
     phase();
 

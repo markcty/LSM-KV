@@ -38,6 +38,10 @@ string KVStore::get(uint64_t key) {
     string ans;
     auto minTime = UINT64_MAX;
     for (const auto &file:dirFiles) {
+
+      const auto &header = SSTable::readHeader(file);
+      if (!(header.minKey <= key && key <= header.maxKey)) continue;
+
       vector<pair<uint64_t, string>> dic;
       SSTable::readDic(file, dic);
       auto time = SSTable::readHeader(file).timeStamp;

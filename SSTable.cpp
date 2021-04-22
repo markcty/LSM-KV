@@ -47,6 +47,7 @@ SSTableHeader SSTable::readHeader(const string &fileName) {
   read64(in, size);
   read64(in, minKey);
   read64(in, maxKey);
+  in.close();
   return SSTableHeader(timeStamp, size, minKey, maxKey);
 }
 
