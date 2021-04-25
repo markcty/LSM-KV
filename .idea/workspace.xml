@@ -18,9 +18,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="finish naive solution">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MurmurHash3.h" beforeDir="false" afterPath="$PROJECT_DIR$/MurmurHash3.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +71,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.saveactions" />
   </component>
-  <component name="RunManager" selected="CMake Application.LSM_KV_CORRECTNESS">
+  <component name="RunManager" selected="CMake Application.LSM_KV">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
@@ -121,7 +122,7 @@
       <workItem from="1619093844251" duration="615000" />
       <workItem from="1619155767929" duration="4000" />
       <workItem from="1619155783305" duration="1156000" />
-      <workItem from="1619357246596" duration="696000" />
+      <workItem from="1619357246596" duration="3991000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -193,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619075832564</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="finish naive solution">
+      <created>1619358566483</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1619358566483</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

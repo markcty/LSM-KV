@@ -36,20 +36,16 @@ string KVStore::get(uint64_t key) {
     for (string &name:dirFiles) name.insert(0, dirName + '/');
 
     string ans;
-    auto minTime = UINT64_MAX;
+    auto maxTime = 0;
     for (const auto &file:dirFiles) {
-
+      // optimize
       const auto &header = SSTable::readHeader(file);
       if (!(header.minKey <= key && key <= header.maxKey)) continue;
 
-      vector<pair<uint64_t, string>> dic;
-      SSTable::readDic(file, dic);
-      auto time = SSTable::readHeader(file).timeStamp;
-      for (const auto &pair:dic)
-        if (pair.first == key && pair.second != "~DELETED~" && time < minTime) {
-          minTime = time;
-          ans = pair.second;
-        }
+      value = SSTable::get(file, key);
+      if (value.empty()) continue;
+
+      if (header.timeStamp > maxTime) ans = value;
     }
     if (!ans.empty()) return ans;
     dirName = storagePath + "/level-" + to_string(++level);

@@ -54,29 +54,29 @@ SSTableHeader SSTable::readHeader(const string &fileName) {
 void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
-  in.seekg(0, ios_base::end);
-  auto fileSize = in.tellg();
+  in.seekg(0, in.end);
+  auto size = in.tellg();
 
-  uint64_t size;
-  in.seekg(8, ios_base::beg); // skip timeStamp
-  read64(in, size);
-  in.seekg(10272, ios_base::beg); // skip header and bloomFilter
+  uint64_t length;
+  in.seekg(8, in.beg); // skip timeStamp
+  read64(in, length);
+  in.seekg(10272, in.beg); // skip header and bloomFilter
 
   // read keys and offsets
   vector<uint64_t> keys;
-  vector<uint32_t> offsets;
-  for (int i = 0; i < size; i++) {
+  vector<int> offsets;
+  for (int i = 0; i < length; i++) {
     uint64_t key;
-    uint32_t offset;
+    int offset;
     read64(in, key);
     read32(in, offset);
     keys.push_back(key);
     offsets.push_back(offset);
   }
-  offsets.push_back(fileSize - in.tellg());
+  offsets.push_back(int(size - in.tellg()));
 
   // read values
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < length; i++) {
     string value;
     auto valueSize = offsets[i + 1] - offsets[i];
     value.reserve(offsets[i + 1] - offsets[i]);
@@ -137,8 +137,48 @@ void SSTable::read64(ifstream &in, uint64_t &n) {
   in.read((char *) &n, 8);
 }
 
-void SSTable::read32(ifstream &in, uint32_t &n) {
+void SSTable::read32(ifstream &in, int &n) {
   in.read((char *) &n, 4);
+}
+
+string SSTable::get(const string &fileName, uint64_t key) {
+  ifstream in(fileName, ios_base::in | ios_base::binary);
+  if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
+
+  in.seekg(8, in.beg); // skip timeStamp
+  uint64_t length;
+  read64(in, length);
+  in.seekg(10272, in.beg); // skip header and bloomFilter
+
+  int offset = -1;
+  int valueLength = -1;
+  for (int i = 0; i < length; i++) {
+    uint64_t _key;
+    int _offset;
+    read64(in, _key);
+    read32(in, _offset);
+    if (_key == key) {
+      offset = _offset;
+      if (i != length - 1) {
+        read64(in, _key);
+        read32(in, _offset);
+        valueLength = _offset - offset;
+      } else {
+        in.seekg(0, in.end);
+        valueLength = int(int(in.tellg()) - (10272 + length * 12));
+      }
+      break;
+    }
+  }
+  if (offset < 0) return "";
+  in.seekg(10272 + int(length) * 12 + offset, in.beg);
+  string value;
+  while (valueLength--) {
+    char c;
+    in.read(&c, 1);
+    value.push_back(c);
+  }
+  return value;
 }
 
 SSTableHeader::SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey, uint64_t _maxKey) :
@@ -160,7 +200,7 @@ BloomFilter::BloomFilter(const SkipList &memTable) {
 }
 
 void BloomFilter::write(ofstream &out) {
-  out.seekp(32, ios_base::beg);
+  out.seekp(32, out.beg);
   for (int i = 0; i < 10240 * 8; i += 8) {
     char temp = false;
     for (int j = 0; j <= 7; j++) temp |= bits[i + j] << j; // NOLINT(cppcoreguidelines-narrowing-conversions)
@@ -180,7 +220,7 @@ BloomFilter::BloomFilter(const SSTableDic &dic) {
 }
 
 BloomFilter::BloomFilter(ifstream &in) {
-  in.seekg(32, ios_base::beg);
+  in.seekg(32, in.beg);
   char buffer[10240];
   in.read(buffer, 10240);
   int p = 0;
