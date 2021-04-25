@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <vector>
 #include <sys/types.h>
+#include <cstring>
 
 #ifdef _WIN32
 #include <direct.h>
@@ -36,7 +37,7 @@ static inline bool dirExists(std::string path) {
  * @return files number.
  */
 #if defined(_WIN32) && !defined(__MINGW32__)
-static inline int scanDir(std::string path, std::vector<std::string> &ret){
+int scanDir(std::string path, std::vector<std::string> &ret){
         std::string extendPath;
         if(path[path.size() - 1] == '/'){
             extendPath = path + "*";
@@ -117,7 +118,7 @@ static inline int mkdir(const char *path) {
  * @param path directory to be deleted.
  * @return 0 if delete successfully, -1 otherwise.
  */
-static inline int rmdir(const char *path) {
+int rmdir(const char *path){
 #ifdef _WIN32
   return ::_rmdir(path);
 #else
