@@ -16,9 +16,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="delete deleted keys at last level">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="finish naive solution">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MurmurHash3.h" beforeDir="false" afterPath="$PROJECT_DIR$/MurmurHash3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +71,11 @@
     <property name="settings.editor.selected.configurable" value="settings.saveactions" />
   </component>
   <component name="RunManager" selected="CMake Application.LSM_KV_CORRECTNESS">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LSM_KV" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LSM_KV" TARGET_NAME="LSM_KV" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LSM_KV" RUN_TARGET_NAME="LSM_KV">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -110,7 +117,11 @@
       <workItem from="1619049792942" duration="4419000" />
       <workItem from="1619054853886" duration="4644000" />
       <workItem from="1619070210045" duration="5000" />
-      <workItem from="1619070898964" duration="3901000" />
+      <workItem from="1619070898964" duration="4436000" />
+      <workItem from="1619093844251" duration="615000" />
+      <workItem from="1619155767929" duration="4000" />
+      <workItem from="1619155783305" duration="1156000" />
+      <workItem from="1619357246596" duration="696000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -175,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619074604568</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="finish naive solution">
+      <created>1619075832564</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1619075832564</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,7 +221,8 @@
     <MESSAGE value="fix same key bug" />
     <MESSAGE value="fix del bug" />
     <MESSAGE value="delete deleted keys at last level" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete deleted keys at last level" />
+    <MESSAGE value="finish naive solution" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish naive solution" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

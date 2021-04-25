@@ -64,7 +64,7 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
 
   // read keys and offsets
   vector<uint64_t> keys;
-  vector<uint32_t> offsets; // TODO: delete offsets
+  vector<uint32_t> offsets;
   for (int i = 0; i < size; i++) {
     uint64_t key;
     uint32_t offset;

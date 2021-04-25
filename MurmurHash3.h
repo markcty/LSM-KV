@@ -19,7 +19,7 @@ typedef unsigned __int64 uint64_t;
 
 #else	// defined(_MSC_VER)
 
-#include <cstdint>
+#include <stdint.h>
 
 #define    FORCE_INLINE inline __attribute__((always_inline))
 
@@ -58,9 +58,9 @@ FORCE_INLINE uint64_t fmix64(uint64_t k) {
   unsigned int hash[4] = {0};
   MurmurHash3_x64_128(&key, sizeof(key), 1, hash);
 */
-inline void MurmurHash3_x64_128(const void *key, const int len,
-                                const uint32_t seed, void *out) {
-  const auto *data = (const uint8_t *) key;
+static inline void MurmurHash3_x64_128(const void *key, const int len,
+                                       const uint32_t seed, void *out) {
+  const uint8_t *data = (const uint8_t *) key;
   const int nblocks = len / 16;
 
   uint64_t h1 = seed;
@@ -69,7 +69,7 @@ inline void MurmurHash3_x64_128(const void *key, const int len,
   const uint64_t c1 = BIG_CONSTANT(0x87c37b91114253d5);
   const uint64_t c2 = BIG_CONSTANT(0x4cf5ad432745937f);
 
-  const auto *blocks = (const uint64_t *) (data);
+  const uint64_t *blocks = (const uint64_t *) (data);
 
   for (int i = 0; i < nblocks; i++) {
     uint64_t k1 = getblock64(blocks, i * 2 + 0);
@@ -94,7 +94,7 @@ inline void MurmurHash3_x64_128(const void *key, const int len,
     h2 = h2 * 5 + 0x38495ab5;
   }
 
-  const auto *tail = (const uint8_t *) (data + nblocks * 16);
+  const uint8_t *tail = (const uint8_t *) (data + nblocks * 16);
 
   uint64_t k1 = 0;
   uint64_t k2 = 0;
