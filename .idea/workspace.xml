@@ -16,13 +16,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="improve get in naive solution">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="finish SSTableCache(not tested)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/correctness.cc" beforeDir="false" afterPath="$PROJECT_DIR$/correctness.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kvstore.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619363014150</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="finish SSTableCache(not tested)">
+      <created>1619408302479</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1619408302479</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,21 +255,28 @@
     <MESSAGE value="delete deleted keys at last level" />
     <MESSAGE value="finish naive solution" />
     <MESSAGE value="improve get in naive solution" />
-    <option name="LAST_COMMIT_MESSAGE" value="improve get in naive solution" />
+    <MESSAGE value="finish SSTableCache(not tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish SSTableCache(not tested)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/correctness.cc</url>
-          <line>35</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/kvstore.cpp</url>
+          <line>31</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/SSTable.cpp</url>
+          <line>272</line>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="store" language="ObjectiveC" />
+        <watch expression="cache[0]" language="ObjectiveC" />
+        <watch expression="index" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>

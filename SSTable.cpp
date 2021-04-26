@@ -266,17 +266,17 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 
 string SSTableCache::get(uint64_t key) const {
   if (!(header.minKey <= key && key <= header.maxKey)) return "";
-  auto cmp = [](const SSTableIndex &left, const SSTableIndex &right) { return left.first < right.first; };
+  auto cmp = [](SSTableIndex left, uint64_t key) { return left.first < key; };
   auto low = lower_bound(index.begin(), index.end(), key, cmp);
   if (low->first != key) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
 
-  auto offset = low->first;
+  auto offset = low->second;
   low++;
   int valueLength;
-  if (low != index.end()) valueLength = int(low->first - offset);
+  if (low != index.end()) valueLength = int(low->second - offset);
   else {
     in.seekg(0, in.end);
     valueLength = int(int(in.tellg()) - (10272 + header.length * 12) - offset);
@@ -289,4 +289,8 @@ string SSTableCache::get(uint64_t key) const {
     value.push_back(c);
   }
   return value;
+}
+
+SSTableHeader SSTableCache::getHeader() const {
+  return header;
 }

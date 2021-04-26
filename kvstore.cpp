@@ -4,6 +4,8 @@
 KVStore::KVStore(const string &_storagePath) :
     KVStoreAPI(_storagePath), timeStamp(0), storagePath(_storagePath) {
   ios_base::sync_with_stdio(false); // turn off sync to accelerate
+  // reserve a cache space for at most 20 levels
+  cache.resize(20);
 }
 
 void KVStore::put(uint64_t key, const string &value) {
@@ -14,7 +16,9 @@ void KVStore::put(uint64_t key, const string &value) {
     vector<string> existsFiles;
     utils::scanDir(storagePath + "/level-0", existsFiles);
 
-    SSTable::toSSTable(memTable, storagePath + "/level-0/" + to_string(timeStamp) + ".sst", timeStamp);
+    auto fileName = storagePath + "/level-0/" + to_string(timeStamp) + ".sst";
+    SSTable::toSSTable(memTable, fileName, timeStamp);
+    cache[0].emplace(fileName, new SSTableCache(memTable, timeStamp, fileName));
     timeStamp++;
 
     memTable.reset();
@@ -29,26 +33,15 @@ string KVStore::get(uint64_t key) {
   if (value == "~DELETED~") return "";
   if (!value.empty()) return value;
   int level = 0;
-  auto dirName = storagePath + "/level-0";
-  while (utils::dirExists(dirName)) {
-    vector<string> dirFiles;
-    utils::scanDir(dirName, dirFiles);
-    for (string &name:dirFiles) name.insert(0, dirName + '/');
-
+  while (!cache[level].empty()) {
     string ans;
     auto maxTime = 0;
-    for (const auto &file:dirFiles) {
-      // optimize
-      const auto &header = SSTable::readHeader(file);
-      if (!(header.minKey <= key && key <= header.maxKey)) continue;
-
-      value = SSTable::get(file, key);
-      if (value.empty()) continue;
-
-      if (header.timeStamp > maxTime) ans = value;
+    for (const auto &c:cache[level]) {
+      value = c.second->get(key);
+      if (!value.empty() && c.second->getHeader().timeStamp > maxTime) ans = value;
     }
     if (!ans.empty()) return ans;
-    dirName = storagePath + "/level-" + to_string(++level);
+    level++;
   }
   return "";
 }
@@ -145,9 +138,15 @@ void KVStore::compaction(int level) {
   // read dictionaries from dics
   vector<vector<pair<uint64_t, string>>> dics(compactionFiles.size());
   for (int i = 0; i < k; i++) {
+    // read dic
     SSTable::readDic(compactionFiles[i], dics[i]);
     utils::rmfile(compactionFiles[i].c_str());
     pairNum += dics[i].size();
+    // delete cache
+//    if (!cache[level].count(compactionFiles[i])) throw runtime_error("No cache for " + compactionFiles[i]);
+    auto c = cache[level].at(compactionFiles[i]);
+    delete c;
+    cache[level].erase(compactionFiles[i]);
   }
 
   // merge the dics, convert to SSTables
@@ -167,9 +166,9 @@ void KVStore::compaction(int level) {
     }
     const auto &pair = dics[minDic].at(indices[minDic]++);
     if (overflow(mergedSize + 8 + pair.second.size(), mergedDic.size() + 1)) {
-      SSTable::toSSTable(mergedDic,
-                         nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++),
-                         maxTimeStamp);
+      auto fileName = nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++);
+      SSTable::toSSTable(mergedDic, fileName, maxTimeStamp);
+      cache[level + 1].emplace(fileName, new SSTableCache(mergedDic, maxTimeStamp, fileName));
       mergedSize = 0;
       mergedDic.clear();
     }
@@ -184,9 +183,9 @@ void KVStore::compaction(int level) {
 
   // convert the remaining key value pairs to a SSTable
   if (mergedSize > 0) {
-    SSTable::toSSTable(mergedDic,
-                       nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++),
-                       maxTimeStamp);
+    auto fileName = nextDir + "/" + to_string(maxTimeStamp) + to_string(nameIndex++);
+    SSTable::toSSTable(mergedDic, fileName, maxTimeStamp);
+    cache[level + 1].emplace(fileName, new SSTableCache(mergedDic, maxTimeStamp, fileName));
   }
   compaction(level + 1);
 }

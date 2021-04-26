@@ -39,6 +39,7 @@ class SSTableCache {
   explicit SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName);
   explicit SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName);
   string get(uint64_t key) const;
+  SSTableHeader getHeader() const;
 };
 
 class SSTable {
