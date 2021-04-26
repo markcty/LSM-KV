@@ -31,7 +31,6 @@ class CorrectnessTest : public Test {
 
     // Test after all insertions
     for (i = 0; i < max; ++i) {
-      cout << i << endl;
       EXPECT(std::string(i + 1, 's'), store.get(i));
     }
     phase();

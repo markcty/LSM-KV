@@ -165,7 +165,7 @@ string SSTable::get(const string &fileName, uint64_t key) {
         valueLength = _offset - offset;
       } else {
         in.seekg(0, in.end);
-        valueLength = int(int(in.tellg()) - (10272 + length * 12));
+        valueLength = int(int(in.tellg()) - (10272 + length * 12) - offset);
       }
       break;
     }

@@ -16,12 +16,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="finish naive solution">
+    <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="improve get in naive solution">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/correctness.cc" beforeDir="false" afterPath="$PROJECT_DIR$/correctness.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +34,11 @@
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="naive_solution" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -45,6 +48,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///LSM_KV" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1rOJGM28CZYrQiReoyLnkTZOSB3" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -71,7 +77,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.saveactions" />
   </component>
-  <component name="RunManager" selected="CMake Application.LSM_KV">
+  <component name="RunManager" selected="CMake Application.LSM_KV_CORRECTNESS">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
@@ -122,7 +128,7 @@
       <workItem from="1619093844251" duration="615000" />
       <workItem from="1619155767929" duration="4000" />
       <workItem from="1619155783305" duration="1156000" />
-      <workItem from="1619357246596" duration="3991000" />
+      <workItem from="1619357246596" duration="6556000" />
     </task>
     <task id="LOCAL-00001" summary="add cmake config">
       <created>1618841226775</created>
@@ -201,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619358566483</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="improve get in naive solution">
+      <created>1619363014150</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1619363014150</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,7 +225,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="index_cached" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -230,9 +255,19 @@
     <MESSAGE value="fix del bug" />
     <MESSAGE value="delete deleted keys at last level" />
     <MESSAGE value="finish naive solution" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish naive solution" />
+    <MESSAGE value="improve get in naive solution" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve get in naive solution" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/correctness.cc</url>
+          <line>35</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="store" language="ObjectiveC" />
