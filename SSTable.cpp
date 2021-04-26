@@ -1,4 +1,6 @@
 #include "SSTable.h"
+
+#include <utility>
 #include "MurmurHash3.h"
 
 void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64_t timeStamp) {
@@ -182,7 +184,9 @@ string SSTable::get(const string &fileName, uint64_t key) {
 }
 
 SSTableHeader::SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey, uint64_t _maxKey) :
-    timeStamp(_timeStamp), size(_size), minKey(_minKey), maxKey(_maxKey) {}
+    timeStamp(_timeStamp), length(_size), minKey(_minKey), maxKey(_maxKey) {}
+
+SSTableHeader::SSTableHeader() = default;
 
 SSTableHeader::SSTableHeader(const SSTableHeader &other) = default;
 
@@ -228,4 +232,61 @@ BloomFilter::BloomFilter(ifstream &in) {
     for (int i = 0; i < 8; i++)
       bits[p++] = (c >> i) & 1;
   }
+}
+
+SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName)
+    : fileName(std::move(_fileName)) {
+  header.length = memTable.getLength();
+  header.minKey = memTable.getMinKey();
+  header.maxKey = memTable.getMaxKey();
+  header.timeStamp = timeStamp;
+
+  auto i = memTable.constBegin();
+  uint32_t offset = 0;
+  while (i.hasNext()) {
+    i.next();
+    index.emplace_back(i.key(), offset);
+    offset += i.value().size();
+  }
+}
+
+SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName)
+    : fileName(std::move(_fileName)) {
+  header.length = dic.size();
+  header.minKey = dic.front().first;
+  header.maxKey = dic.back().first;
+  header.timeStamp = timeStamp;
+
+  uint32_t offset = 0;
+  for (const auto &pair:dic) {
+    index.emplace_back(pair.first, offset);
+    offset += pair.second.size();
+  }
+}
+
+string SSTableCache::get(uint64_t key) const {
+  if (!(header.minKey <= key && key <= header.maxKey)) return "";
+  auto cmp = [](const SSTableIndex &left, const SSTableIndex &right) { return left.first < right.first; };
+  auto low = lower_bound(index.begin(), index.end(), key, cmp);
+  if (low->first != key) return "";
+
+  ifstream in(fileName, ios_base::in | ios_base::binary);
+  if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
+
+  auto offset = low->first;
+  low++;
+  int valueLength;
+  if (low != index.end()) valueLength = int(low->first - offset);
+  else {
+    in.seekg(0, in.end);
+    valueLength = int(int(in.tellg()) - (10272 + header.length * 12) - offset);
+  }
+  in.seekg(int(10272 + header.length * 12 + offset), in.beg);
+  string value;
+  while (valueLength--) {
+    char c;
+    in.read(&c, 1);
+    value.push_back(c);
+  }
+  return value;
 }

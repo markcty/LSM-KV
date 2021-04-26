@@ -153,7 +153,7 @@ void KVStore::compaction(int level) {
   // merge the dics, convert to SSTables
   vector<int> indices(k);
   SSTableDic mergedDic;
-  unsigned long mergedSize = 0; // key and value size in mergedDic used to check overflow
+  unsigned long mergedSize = 0; // key and value length in mergedDic used to check overflow
   auto nameIndex = 0;
   uint64_t lastTimeStamp = 0;
   while (pairNum--) {

@@ -19,7 +19,10 @@
     <list default="true" id="3661895c-085b-4fbe-a394-e2b74d8f10c2" name="Default Changelist" comment="improve get in naive solution">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SSTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/correctness.cc" beforeDir="false" afterPath="$PROJECT_DIR$/correctness.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SSTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SSTable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kvstore.h" beforeDir="false" afterPath="$PROJECT_DIR$/kvstore.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,19 +228,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="index_cached" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
