@@ -42,9 +42,9 @@ string KVStore::get(uint64_t key) {
       value = SSTable::get(file, key);
       if (value.empty()) continue;
 
-      if (header.timeStamp > maxTime) ans = value;
+      if (header.timeStamp >= maxTime) ans = value;
     }
-    if (!ans.empty()) return ans;
+    if (!ans.empty() && ans!="~DELETED~") return ans;
     dirName = storagePath + "/level-" + to_string(++level);
   }
   return "";
