@@ -11,9 +11,6 @@ void KVStore::put(uint64_t key, const string &value) {
   if (overflow(memTable.getSize() + 8 + value.size(), memTable.getLength() + 1)) {
     if (!utils::dirExists(storagePath + "/level-0")) utils::mkdir((storagePath + "/level-0").c_str());
 
-    vector<string> existsFiles;
-    utils::scanDir(storagePath + "/level-0", existsFiles);
-
     SSTable::toSSTable(memTable, storagePath + "/level-0/" + to_string(timeStamp) + ".sst", timeStamp);
     timeStamp++;
 
@@ -205,5 +202,9 @@ int KVStore::pow2(int n) {
   return ret;
 }
 
-KVStore::~KVStore() = default;
+KVStore::~KVStore() {
+  if (!utils::dirExists(storagePath + "/level-0")) utils::mkdir((storagePath + "/level-0").c_str());
+  SSTable::toSSTable(memTable, storagePath + "/level-0/" + to_string(timeStamp) + ".sst", timeStamp);
+  compaction(0);
+}
 

@@ -3,4 +3,5 @@
 .DS_Store
 cmake-build-debug
 data
-.idea
+workspace.xml
+usage.statistics.xml
