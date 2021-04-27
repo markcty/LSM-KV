@@ -54,12 +54,20 @@ bool KVStore::del(uint64_t key) {
   return true;
 }
 
-/*
- * This resets the kvstore. All key-value pairs should be removed,
- * including memtable and all sstables files.
- */
 void KVStore::reset() {
   timeStamp = 0;
+
+  memTable.reset(); // reset memTable
+
+  // clean all SSTables
+  string dir = storagePath + "/level-0";
+  vector<string> files;
+  int level = 0;
+  while (utils::scanDir(dir, files) > 0) {
+    for (const auto &file:files)
+      utils::rmfile((dir + "/" + file).c_str()); // NOLINT(performance-inefficient-string-concatenation)
+    dir = storagePath + "/level-" + to_string(++level);
+  }
 }
 
 bool KVStore::overflow(unsigned long size, unsigned long length) {
