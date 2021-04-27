@@ -9,11 +9,6 @@ int main() {
   KVStore store("../data");
   vector<uint64_t> keys;
 //  for (uint64_t i = 0; i < 5; i++) store.put(i, to_string(i));
-//  cout << store.get(1) << endl;
-//  cout << store.get(2) << endl;
-//  cout << store.get(3) << endl;
-//  cout << store.get(4) << endl;
-//  cout << store.get(0) << endl;
 //  store.del(3);
 //  store.del(1);
 //  cout << store.get(1) << endl;
@@ -36,18 +31,18 @@ int main() {
 
 
 
-//  for (uint64_t i = 0; i < 1600000; i++) {
-//    auto key = i;
-//    keys.push_back(key);
-//    store.put(key, to_string(key));
-//  }
-//  cout << keys[5] << " " << store.get(keys[5]) << endl;
-//  cout << keys[9] << " " << store.get(keys[9]) << endl;
-//  cout << keys[20] << " " << store.get(keys[20]) << endl;
-//  cout << keys[718283] << " " << store.get(keys[718283]) << endl;
-//  cout << keys[192874] << " " << store.get(keys[192874]) << endl;
-//  cout << keys[1192874] << " " << store.get(keys[1192874]) << endl;
-//  cout << keys[892874] << " " << store.get(keys[892874]) << endl;
+  for (uint64_t i = 0; i < 1600000; i++) {
+    auto key = i;
+    keys.push_back(key);
+    store.put(key, to_string(key));
+  }
+  cout << keys[5] << " " << store.get(keys[5]) << endl;
+  cout << keys[9] << " " << store.get(keys[9]) << endl;
+  cout << keys[20] << " " << store.get(keys[20]) << endl;
+  cout << keys[718283] << " " << store.get(keys[718283]) << endl;
+  cout << keys[192874] << " " << store.get(keys[192874]) << endl;
+  cout << keys[1192874] << " " << store.get(keys[1192874]) << endl;
+  cout << keys[892874] << " " << store.get(keys[892874]) << endl;
 
   return 0;
 }

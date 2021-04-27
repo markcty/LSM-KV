@@ -11,7 +11,7 @@ KVStore::KVStore(const string &_storagePath) :
   string dir = storagePath + "/level-0";
   vector<string> files;
   int level = 0;
-  while (utils::scanDir(dir, files) > 0) {
+  while (utils::dirExists(dir) && utils::scanDir(dir, files) > 0) {
     for (const auto &file:files) {
       auto fileName = dir + "/" + file;// NOLINT(performance-inefficient-string-concatenation)}
       cache[level].emplace(fileName, new SSTableCache(fileName));
@@ -76,7 +76,7 @@ void KVStore::reset() {
   string dir = storagePath + "/level-0";
   vector<string> files;
   int level = 0;
-  while (utils::scanDir(dir, files) > 0) {
+  while (utils::dirExists(dir) && utils::scanDir(dir, files) > 0) {
     for (const auto &file:files)
       utils::rmfile((dir + "/" + file).c_str()); // NOLINT(performance-inefficient-string-concatenation)
     dir = storagePath + "/level-" + to_string(++level);
@@ -219,7 +219,9 @@ int KVStore::pow2(int n) {
 
 KVStore::~KVStore() {
   if (!utils::dirExists(storagePath + "/level-0")) utils::mkdir((storagePath + "/level-0").c_str());
-  SSTable::toSSTable(memTable, storagePath + "/level-0/" + to_string(timeStamp) + ".sst", timeStamp);
+  auto fileName = storagePath + "/level-0/" + to_string(timeStamp) + ".sst";
+  SSTable::toSSTable(memTable, fileName, timeStamp);
+  cache[0].emplace(fileName, new SSTableCache(memTable, timeStamp, fileName));
   compaction(0);
 }
 
