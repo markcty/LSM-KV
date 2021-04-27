@@ -6,6 +6,18 @@ KVStore::KVStore(const string &_storagePath) :
   ios_base::sync_with_stdio(false); // turn off sync to accelerate
   // reserve a cache space for at most 20 levels
   cache.resize(20);
+
+  // build cache
+  string dir = storagePath + "/level-0";
+  vector<string> files;
+  int level = 0;
+  while (utils::scanDir(dir, files) > 0) {
+    for (const auto &file:files) {
+      auto fileName = dir + "/" + file;// NOLINT(performance-inefficient-string-concatenation)}
+      cache[level].emplace(fileName, new SSTableCache(fileName));
+    }
+    dir = storagePath + "/level-" + to_string(++level);
+  }
 }
 
 void KVStore::put(uint64_t key, const string &value) {

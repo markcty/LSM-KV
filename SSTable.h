@@ -33,23 +33,24 @@ class BloomFilter {
 class SSTableCache {
  private:
   SSTableHeader header;
-  vector<SSTableIndex> index;
+  vector<SSTableIndex> indices;
   const string fileName;
  public:
   explicit SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName);
   explicit SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName);
+  explicit SSTableCache(string _fileName);
   string get(uint64_t key) const;
   SSTableHeader getHeader() const;
 };
 
 class SSTable {
- private:
+ public:
+  // utils
   static void write64(ofstream &out, uint64_t n);
   static void write32(ofstream &out, uint32_t n);
   static void read64(ifstream &in, uint64_t &n);
   static void read32(ifstream &in, int &n);
 
- public:
   /**
    * convert a mem table to a SSTable file
    * @param memTable mem table

@@ -245,7 +245,7 @@ SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string 
   uint32_t offset = 0;
   while (i.hasNext()) {
     i.next();
-    index.emplace_back(i.key(), offset);
+    indices.emplace_back(i.key(), offset);
     offset += i.value().size();
   }
 }
@@ -259,7 +259,7 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 
   uint32_t offset = 0;
   for (const auto &pair:dic) {
-    index.emplace_back(pair.first, offset);
+    indices.emplace_back(pair.first, offset);
     offset += pair.second.size();
   }
 }
@@ -267,7 +267,7 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 string SSTableCache::get(uint64_t key) const {
   if (!(header.minKey <= key && key <= header.maxKey)) return "";
   auto cmp = [](SSTableIndex left, uint64_t key) { return left.first < key; };
-  auto low = lower_bound(index.begin(), index.end(), key, cmp);
+  auto low = lower_bound(indices.begin(), indices.end(), key, cmp);
   if (low->first != key) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
@@ -276,7 +276,7 @@ string SSTableCache::get(uint64_t key) const {
   auto offset = low->second;
   low++;
   int valueLength;
-  if (low != index.end()) valueLength = int(low->second - offset);
+  if (low != indices.end()) valueLength = int(low->second - offset);
   else {
     in.seekg(0, in.end);
     valueLength = int(int(in.tellg()) - (10272 + header.length * 12) - offset);
@@ -293,4 +293,22 @@ string SSTableCache::get(uint64_t key) const {
 
 SSTableHeader SSTableCache::getHeader() const {
   return header;
+}
+
+SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
+  ifstream in(fileName, ios_base::in | ios_base::binary);
+  if (in.fail()) throw runtime_error("readHeader: Open file " + fileName + " failed!");
+
+  SSTable::read64(in, header.timeStamp);
+  SSTable::read64(in, header.length);
+  SSTable::read64(in, header.minKey);
+  SSTable::read64(in, header.maxKey);
+
+  for (int i = 0; i < header.length; i++) {
+    uint64_t key;
+    int offset;
+    SSTable::read64(in, key);
+    SSTable::read32(in, offset);
+    indices.emplace_back(key, offset);
+  }
 }
