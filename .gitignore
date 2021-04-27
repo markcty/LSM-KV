@@ -5,3 +5,5 @@ cmake-build-debug
 data
 workspace.xml
 usage.statistics.xml
+peekSSTable
+out.txt

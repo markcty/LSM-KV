@@ -44,13 +44,13 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
 SSTableHeader SSTable::readHeader(const string &fileName) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail()) throw runtime_error("readHeader: Open file " + fileName + " failed!");
-  uint64_t timeStamp, size, minKey, maxKey;
+  uint64_t timeStamp, length, minKey, maxKey;
   read64(in, timeStamp);
-  read64(in, size);
+  read64(in, length);
   read64(in, minKey);
   read64(in, maxKey);
   in.close();
-  return SSTableHeader(timeStamp, size, minKey, maxKey);
+  return SSTableHeader(timeStamp, length, minKey, maxKey);
 }
 
 void SSTable::readDic(const string &fileName, SSTableDic &dic) {
@@ -303,6 +303,8 @@ SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
   SSTable::read64(in, header.length);
   SSTable::read64(in, header.minKey);
   SSTable::read64(in, header.maxKey);
+
+  in.seekg(32 + 10240 + header.length * 12, in.beg);
 
   for (int i = 0; i < header.length; i++) {
     uint64_t key;
