@@ -13,3 +13,4 @@ try: BloomFilter.o SkipList.o SSTable.o kvstore.o try.o
 clean:
 	-rm -f correctness persistence try *.o
 	-rm -rf data/*
+	-rm -rf peekSSTable out.txt

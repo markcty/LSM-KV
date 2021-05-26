@@ -30,12 +30,14 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
     write32(out, offset);
     offset += i.value().size();
   }
+  write64(out, 0);
+  write32(out, offset);
 
   // Value
   i = memTable.constBegin();
   while (i.hasNext()) {
     i.next();
-    out.write(i.value().c_str(), (long) i.value().size());
+    out.write(i.value().c_str(), i.value().size());
   }
 
   out.close();
@@ -56,26 +58,28 @@ SSTableHeader SSTable::readHeader(const string &fileName) {
 void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
-  in.seekg(0, in.end);
+  in.seekg(0, ifstream::end);
   auto size = in.tellg();
 
   uint64_t length;
-  in.seekg(8, in.beg); // skip timeStamp
+  in.seekg(8, ifstream::beg); // skip timeStamp
   read64(in, length);
-  in.seekg(10272, in.beg); // skip header and bloomFilter
+  in.seekg(10272, ifstream::beg); // skip header and bloomFilter
 
   // read keys and offsets
   vector<uint64_t> keys;
   vector<int> offsets;
+  uint64_t key;
+  int offset;
   for (int i = 0; i < length; i++) {
-    uint64_t key;
-    int offset;
     read64(in, key);
     read32(in, offset);
     keys.push_back(key);
     offsets.push_back(offset);
   }
-  offsets.push_back(int(size - in.tellg()));
+  read64(in, key);
+  read32(in, offset);
+  offsets.push_back(offset);
 
   // read values
   for (int i = 0; i < length; i++) {
@@ -118,6 +122,8 @@ void SSTable::toSSTable(const SSTableDic &dic, const string &fileName, uint64_t 
     write32(out, offset);
     offset += pair.second.size();
   }
+  write64(out, 0);
+  write32(out, offset);
 
   // Value
   for (const auto &pair:dic) {
@@ -147,10 +153,10 @@ string SSTable::get(const string &fileName, uint64_t key) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
 
-  in.seekg(8, in.beg); // skip timeStamp
+  in.seekg(8, ifstream::beg); // skip timeStamp
   uint64_t length;
   read64(in, length);
-  in.seekg(10272, in.beg); // skip header and bloomFilter
+  in.seekg(10272, ifstream::beg); // skip header and bloomFilter
 
   int offset = -1;
   int valueLength = -1;
@@ -161,19 +167,14 @@ string SSTable::get(const string &fileName, uint64_t key) {
     read32(in, _offset);
     if (_key == key) {
       offset = _offset;
-      if (i != length - 1) {
-        read64(in, _key);
-        read32(in, _offset);
-        valueLength = _offset - offset;
-      } else {
-        in.seekg(0, in.end);
-        valueLength = int(int(in.tellg()) - (10272 + length * 12) - offset);
-      }
+      read64(in, _key);
+      read32(in, _offset);
+      valueLength = _offset - offset;
       break;
     }
   }
   if (offset < 0) return "";
-  in.seekg(10272 + int(length) * 12 + offset, in.beg);
+  in.seekg(10272 + (length + 1) * 12 + offset, ifstream::beg);
   string value;
   while (valueLength--) {
     char c;
@@ -204,7 +205,7 @@ BloomFilter::BloomFilter(const SkipList &memTable) {
 }
 
 void BloomFilter::write(ofstream &out) {
-  out.seekp(32, out.beg);
+  out.seekp(32, std::ofstream::beg);
   for (int i = 0; i < 10240 * 8; i += 8) {
     char temp = false;
     for (int j = 0; j <= 7; j++) temp |= bits[i + j] << j; // NOLINT(cppcoreguidelines-narrowing-conversions)
@@ -224,7 +225,7 @@ BloomFilter::BloomFilter(const SSTableDic &dic) {
 }
 
 BloomFilter::BloomFilter(ifstream &in) {
-  in.seekg(32, in.beg);
+  in.seekg(32, ifstream::beg);
   char buffer[10240];
   in.read(buffer, 10240);
   int p = 0;
@@ -234,8 +235,10 @@ BloomFilter::BloomFilter(ifstream &in) {
   }
 }
 
+BloomFilter::BloomFilter() = default;
+
 SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName)
-    : fileName(std::move(_fileName)) {
+    : fileName(std::move(_fileName)), bloomFilter(memTable) {
   header.length = memTable.getLength();
   header.minKey = memTable.getMinKey();
   header.maxKey = memTable.getMaxKey();
@@ -245,13 +248,13 @@ SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string 
   uint32_t offset = 0;
   while (i.hasNext()) {
     i.next();
-    indices.emplace_back(i.key(), offset);
+    index.emplace_back(i.key(), offset);
     offset += i.value().size();
   }
 }
 
 SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName)
-    : fileName(std::move(_fileName)) {
+    : fileName(std::move(_fileName)), bloomFilter(dic) {
   header.length = dic.size();
   header.minKey = dic.front().first;
   header.maxKey = dic.back().first;
@@ -259,15 +262,16 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 
   uint32_t offset = 0;
   for (const auto &pair:dic) {
-    indices.emplace_back(pair.first, offset);
+    index.emplace_back(pair.first, offset);
     offset += pair.second.size();
   }
+  index.emplace_back(0, offset);
 }
 
 string SSTableCache::get(uint64_t key) const {
   if (!(header.minKey <= key && key <= header.maxKey)) return "";
   auto cmp = [](SSTableIndex left, uint64_t key) { return left.first < key; };
-  auto low = lower_bound(indices.begin(), indices.end(), key, cmp);
+  auto low = lower_bound(index.begin(), index.end(), key, cmp);
   if (low->first != key) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
@@ -276,18 +280,17 @@ string SSTableCache::get(uint64_t key) const {
   auto offset = low->second;
   low++;
   int valueLength;
-  if (low != indices.end()) valueLength = int(low->second - offset);
-  else {
-    in.seekg(0, in.end);
-    valueLength = int(int(in.tellg()) - (10272 + header.length * 12) - offset);
-  }
-  in.seekg(int(10272 + header.length * 12 + offset), in.beg);
+  valueLength = low->second - offset;
+
+  in.seekg(10272 + (header.length + 1) * 12 + offset, ifstream::beg);
   string value;
   while (valueLength--) {
     char c;
     in.read(&c, 1);
     value.push_back(c);
   }
+
+  in.close();
   return value;
 }
 
@@ -304,13 +307,17 @@ SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
   SSTable::read64(in, header.minKey);
   SSTable::read64(in, header.maxKey);
 
-  in.seekg(32 + 10240 + header.length * 12, in.beg);
+  bloomFilter = BloomFilter(in);
 
-  for (int i = 0; i < header.length; i++) {
+  in.seekg(32 + 10240 + (header.length + 1) * 12, std::ifstream::beg);
+
+  for (int i = 0; i < header.length + 1; i++) {
     uint64_t key;
     int offset;
     SSTable::read64(in, key);
     SSTable::read32(in, offset);
-    indices.emplace_back(key, offset);
+    index.emplace_back(key, offset);
   }
+
+  in.close();
 }

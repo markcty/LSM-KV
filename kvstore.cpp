@@ -23,7 +23,7 @@ KVStore::KVStore(const string &_storagePath) :
 
 void KVStore::put(uint64_t key, const string &value) {
   // if overflow, convert memTable to a SSTable and do compaction
-  if (overflow(memTable.getSize() + 8 + value.size(), memTable.getLength() + 1)) {
+  if (overflow(memTable.getLength() + 1, memTable.getValueSize() + value.size())) {
     if (!utils::dirExists(storagePath + "/level-0")) utils::mkdir((storagePath + "/level-0").c_str());
 
     auto fileName = storagePath + "/level-0/" + to_string(fileNums++);
@@ -90,9 +90,9 @@ void KVStore::reset() {
   }
 }
 
-bool KVStore::overflow(unsigned long size, unsigned long length) {
-  auto offSetSize = length * 4;
-  return HeaderSize + BloomFilterSize + size + offSetSize >= SSTableSize;
+bool KVStore::overflow(unsigned long length, unsigned long valueSize) {
+  auto indexSize = (length + 1) * 12;
+  return HeaderSize + BloomFilterSize + indexSize + valueSize >= SSTableSize;
 }
 
 void KVStore::compaction(int level) {

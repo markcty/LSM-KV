@@ -26,7 +26,7 @@ class SkipList {
 
   unsigned long length;
 
-  unsigned long size;
+  unsigned long valueSize;
 
   inline bool shouldGrowUp();
 
@@ -45,7 +45,7 @@ class SkipList {
 
   unsigned long getLength() const;
 
-  unsigned long getSize() const;
+  unsigned long getValueSize() const;
 
   uint64_t getMinKey() const;
 

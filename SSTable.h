@@ -27,13 +27,15 @@ class BloomFilter {
   explicit BloomFilter(const SkipList &memTable);
   explicit BloomFilter(const SSTableDic &dic);
   explicit BloomFilter(ifstream &in);
+  BloomFilter();
   void write(ofstream &out);
 };
 
 class SSTableCache {
  private:
   SSTableHeader header;
-  vector<SSTableIndex> indices;
+  vector<SSTableIndex> index;
+  BloomFilter bloomFilter;
   const string fileName;
  public:
   explicit SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName);
