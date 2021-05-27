@@ -92,7 +92,7 @@ void KVStore::reset() {
 
 bool KVStore::overflow(unsigned long length, unsigned long valueSize) {
   auto indexSize = (length + 1) * 12;
-  return HeaderSize + BloomFilterSize + indexSize + valueSize >= SSTableSize;
+  return 32 + 10240 + indexSize + valueSize >= 2 * 1024 * 1024;
 }
 
 void KVStore::compaction(int level) {
