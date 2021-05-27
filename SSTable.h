@@ -29,6 +29,7 @@ class BloomFilter {
   explicit BloomFilter(ifstream &in);
   BloomFilter();
   void write(ofstream &out);
+  bool exists(uint64_t key) const;
 };
 
 class SSTableCache {

@@ -235,6 +235,15 @@ BloomFilter::BloomFilter(ifstream &in) {
   }
 }
 
+bool BloomFilter::exists(uint64_t key) const {
+  unsigned int hash[4] = {0};
+  MurmurHash3_x64_128(&key, sizeof(key), 1, &hash);
+  return bits[hash[0] % (10240 * 8)]
+      && bits[hash[1] % (10240 * 8)]
+      && bits[hash[2] % (10240 * 8)]
+      && bits[hash[3] % (10240 * 8)];
+}
+
 BloomFilter::BloomFilter() = default;
 
 SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName)
@@ -271,6 +280,7 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 
 string SSTableCache::get(uint64_t key) const {
   if (!(header.minKey <= key && key <= header.maxKey)) return "";
+  if (!bloomFilter.exists(key)) return "";
   auto cmp = [](SSTableIndex left, uint64_t key) { return left.first < key; };
   auto low = lower_bound(index.begin(), index.end() - 1, key, cmp);
   if (low->first != key) return "";
