@@ -7,11 +7,15 @@
 
 #include "SkipList.h"
 
+// Its ascending attribute must be promised by code
 using SSTableDic = vector<pair<uint64_t, string>>;
+
+using SSTableIndex = pair<uint64_t, int>;
 
 class SSTableHeader {
  public:
-  uint64_t timeStamp, size, minKey, maxKey;
+  uint64_t timeStamp{}, length{}, minKey{}, maxKey{};
+  SSTableHeader();
   explicit SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey, uint64_t _maxKey);
   SSTableHeader(const SSTableHeader &other);
 };
@@ -23,17 +27,33 @@ class BloomFilter {
   explicit BloomFilter(const SkipList &memTable);
   explicit BloomFilter(const SSTableDic &dic);
   explicit BloomFilter(ifstream &in);
+  BloomFilter();
   void write(ofstream &out);
+  bool exists(uint64_t key) const;
+};
+
+class SSTableCache {
+ private:
+  SSTableHeader header;
+  vector<SSTableIndex> index;
+  BloomFilter bloomFilter;
+  const string fileName;
+ public:
+  explicit SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName);
+  explicit SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName);
+  explicit SSTableCache(string _fileName);
+  string get(uint64_t key) const;
+  SSTableHeader getHeader() const;
 };
 
 class SSTable {
- private:
+ public:
+  // utils
   static void write64(ofstream &out, uint64_t n);
   static void write32(ofstream &out, uint32_t n);
   static void read64(ifstream &in, uint64_t &n);
   static void read32(ifstream &in, int &n);
 
- public:
   /**
    * convert a mem table to a SSTable file
    * @param memTable mem table

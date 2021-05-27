@@ -10,8 +10,6 @@ using namespace std;
 
 class SkipList {
  private:
-  const int keySize = sizeof(uint64_t);
-
   random_device rd;
   mt19937 mt;
 
@@ -26,7 +24,7 @@ class SkipList {
 
   unsigned long length;
 
-  unsigned long size;
+  unsigned long valueSize;
 
   inline bool shouldGrowUp();
 
@@ -45,7 +43,7 @@ class SkipList {
 
   unsigned long getLength() const;
 
-  unsigned long getSize() const;
+  unsigned long getValueSize() const;
 
   uint64_t getMinKey() const;
 

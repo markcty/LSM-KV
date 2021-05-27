@@ -5,7 +5,7 @@ SkipList::Node::Node(uint64_t _key, string _value, Node *_right, Node *_down)
 
 SkipList::Node::Node() : right(nullptr), down(nullptr), key(0), value() {}
 
-SkipList::SkipList() : rd(), mt(rd()), head(new Node), length(0), size(0) {}
+SkipList::SkipList() : rd(), mt(rd()), head(new Node), length(0), valueSize(0) {}
 
 void SkipList::put(uint64_t key, const string &value) {
   // if key exists, update the value of all nodes
@@ -23,6 +23,8 @@ void SkipList::put(uint64_t key, const string &value) {
     while (p->right && p->right->key < key) p = p->right;
     // if key exists
     if (p->right && p->right->key == key) {
+      valueSize -= p->right->value.size();
+      valueSize += value.size();
       update(p->right, value);
       return;
     }
@@ -50,7 +52,7 @@ void SkipList::put(uint64_t key, const string &value) {
   }
 
   length++;
-  size += keySize + value.size();
+  valueSize += value.size();
 }
 
 string SkipList::get(uint64_t key) const {
@@ -78,7 +80,8 @@ bool SkipList::remove(uint64_t key) {
   if (!p || p->key != key) return false;
 
   length--;
-  size -= keySize + p->value.length();
+  assert(valueSize >= p->value.size());
+  valueSize -= p->value.size();
   // remove the tower
   while (!path.empty()) {
     p = path.top();
@@ -107,7 +110,7 @@ void SkipList::reset() {
   }
   head = new Node();
   length = 0;
-  size = 0;
+  valueSize = 0;
 }
 
 SkipList::~SkipList() {
@@ -137,7 +140,7 @@ uint64_t SkipList::getMaxKey() const {
 
 unsigned long SkipList::getLength() const { return length; }
 
-unsigned long SkipList::getSize() const { return size; }
+unsigned long SkipList::getValueSize() const { return valueSize; }
 
 SkipList::ConstIterator::ConstIterator(SkipList::Node *_p) : p(_p) {}
 

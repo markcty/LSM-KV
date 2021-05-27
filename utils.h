@@ -39,7 +39,7 @@ static inline bool dirExists(std::string path) {
 #if defined(_WIN32) && !defined(__MINGW32__)
 int scanDir(std::string path, std::vector<std::string> &ret){
         std::string extendPath;
-        if(path[path.size() - 1] == '/'){
+        if(path[path.length() - 1] == '/'){
             extendPath = path + "*";
         }
         else{
@@ -60,7 +60,7 @@ int scanDir(std::string path, std::vector<std::string> &ret){
             }
         }
         FindClose(h);
-        return ret.size();
+        return ret.length();
     }
 #endif
 #if defined(linux) || defined(__MINGW32__) || defined(__APPLE__)
@@ -118,7 +118,7 @@ static inline int mkdir(const char *path) {
  * @param path directory to be deleted.
  * @return 0 if delete successfully, -1 otherwise.
  */
-int rmdir(const char *path){
+int rmdir(const char *path) {
 #ifdef _WIN32
   return ::_rmdir(path);
 #else
