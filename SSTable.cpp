@@ -280,18 +280,26 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 
 string SSTableCache::get(uint64_t key) const {
   if (!(header.minKey <= key && key <= header.maxKey)) return "";
-  if (!bloomFilter.exists(key)) return "";
-  auto cmp = [](SSTableIndex left, uint64_t key) { return left.first < key; };
-  auto low = lower_bound(index.begin(), index.end() - 1, key, cmp);
-  if (low->first != key) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
 
-  auto offset = low->second;
-  low++;
-  int valueSize;
-  valueSize = low->second - offset;
+  // skip header and bloom filter
+  in.seekg(32 + 10240, ifstream::beg);
+
+  uint64_t _key;
+  int offset, valueSize;
+  for (int i = 0; i < header.length; i++) {
+    SSTable::read64(in, _key);
+    SSTable::read32(in, offset);
+    if (_key == key) break;
+  }
+  if (_key != key) return "";
+  uint64_t t1;
+  int t2;
+  SSTable::read64(in, t1);
+  SSTable::read32(in, t2);
+  valueSize = t2 - offset;
 
   in.seekg(10272 + (header.length + 1) * 12 + offset, ifstream::beg);
 
