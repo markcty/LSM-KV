@@ -179,6 +179,8 @@ string SSTable::get(const string &fileName, uint64_t key) {
   buf[valueSize] = '\0';
   string value(buf);
   delete[] buf;
+
+  in.close();
   return value;
 }
 
