@@ -51,7 +51,7 @@ string KVStore::get(uint64_t key) {
     uint64_t maxTime = 0;
     while (i != cache.cend() && getLevel(i->first) == level) {
       value = i->second->get(key);
-      if (!value.empty() && i->second->getHeader().timeStamp > maxTime) {
+      if (!value.empty() && i->second->getHeader().timeStamp >= maxTime) {
         ans = value;
         maxTime = i->second->getHeader().timeStamp;
       }
@@ -167,12 +167,6 @@ void KVStore::compaction(int level) {
     SSTable::readDic(compactionFiles[i], dics[i]);
     utils::rmfile(compactionFiles[i].c_str());
     pairNum += dics[i].size();
-
-    // delete cache
-    assert(cache.count(compactionFiles[i]));
-    auto c = cache.at(compactionFiles[i]);
-    delete c;
-    cache.erase(compactionFiles[i]);
   }
 
   // merge the dics, convert to SSTables
@@ -225,6 +219,16 @@ void KVStore::compaction(int level) {
     valueSize += pair.second.size();
     t.push_back(pair);
   }
+
+  // delete cache
+  for (int i = 0; i < k; i++) {
+    // delete cache
+    assert(cache.count(compactionFiles[i]));
+    auto c = cache.at(compactionFiles[i]);
+    delete c;
+    cache.erase(compactionFiles[i]);
+  }
+
   // convert the remaining key value pairs to a SSTable
   if (!t.empty()) {
     auto fileName = nextDir + "/" + to_string(fileNums++);

@@ -83,14 +83,13 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
 
   // read values
   for (int i = 0; i < length; i++) {
-    string value;
+
     auto valueSize = offsets[i + 1] - offsets[i];
-    value.reserve(offsets[i + 1] - offsets[i]);
-    while (valueSize--) {
-      char c;
-      in.read(&c, 1);
-      value.push_back(c);
-    }
+    char *buf = new char[valueSize + 1];
+    in.read(buf, valueSize);
+    buf[valueSize] = '\0';
+    string value(buf);
+    delete[] buf;
     dic.emplace_back(keys[i], value);
   }
 
@@ -159,7 +158,7 @@ string SSTable::get(const string &fileName, uint64_t key) {
   in.seekg(10272, ifstream::beg); // skip header and bloomFilter
 
   int offset = -1;
-  int valueLength = -1;
+  int valueSize = -1;
   for (int i = 0; i < length; i++) {
     uint64_t _key;
     int _offset;
@@ -169,18 +168,17 @@ string SSTable::get(const string &fileName, uint64_t key) {
       offset = _offset;
       read64(in, _key);
       read32(in, _offset);
-      valueLength = _offset - offset;
+      valueSize = _offset - offset;
       break;
     }
   }
   if (offset < 0) return "";
   in.seekg(10272 + (length + 1) * 12 + offset, ifstream::beg);
-  string value;
-  while (valueLength--) {
-    char c;
-    in.read(&c, 1);
-    value.push_back(c);
-  }
+  char *buf = new char[valueSize + 1];
+  in.read(buf, valueSize);
+  buf[valueSize] = '\0';
+  string value(buf);
+  delete[] buf;
   return value;
 }
 
@@ -251,6 +249,7 @@ SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string 
     index.emplace_back(i.key(), offset);
     offset += i.value().size();
   }
+  index.emplace_back(0, offset);
 }
 
 SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName)
@@ -271,7 +270,7 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
 string SSTableCache::get(uint64_t key) const {
   if (!(header.minKey <= key && key <= header.maxKey)) return "";
   auto cmp = [](SSTableIndex left, uint64_t key) { return left.first < key; };
-  auto low = lower_bound(index.begin(), index.end(), key, cmp);
+  auto low = lower_bound(index.begin(), index.end() - 1, key, cmp);
   if (low->first != key) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
@@ -279,16 +278,16 @@ string SSTableCache::get(uint64_t key) const {
 
   auto offset = low->second;
   low++;
-  int valueLength;
-  valueLength = low->second - offset;
+  int valueSize;
+  valueSize = low->second - offset;
 
   in.seekg(10272 + (header.length + 1) * 12 + offset, ifstream::beg);
-  string value;
-  while (valueLength--) {
-    char c;
-    in.read(&c, 1);
-    value.push_back(c);
-  }
+
+  char *buf = new char[valueSize + 1];
+  in.read(buf, valueSize);
+  buf[valueSize] = '\0';
+  string value(buf);
+  delete[] buf;
 
   in.close();
   return value;
@@ -311,13 +310,16 @@ SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
 
   in.seekg(32 + 10240 + (header.length + 1) * 12, std::ifstream::beg);
 
+  uint64_t key;
+  int offset;
   for (int i = 0; i < header.length + 1; i++) {
-    uint64_t key;
-    int offset;
     SSTable::read64(in, key);
     SSTable::read32(in, offset);
     index.emplace_back(key, offset);
   }
+  SSTable::read64(in, key);
+  SSTable::read32(in, offset);
+  index.emplace_back(key, offset);
 
   in.close();
 }
