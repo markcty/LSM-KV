@@ -10,8 +10,6 @@ using namespace std;
 
 class SkipList {
  private:
-  const int keySize = sizeof(uint64_t);
-
   random_device rd;
   mt19937 mt;
 

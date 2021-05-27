@@ -310,11 +310,11 @@ SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
 
   bloomFilter = BloomFilter(in);
 
-  in.seekg(32 + 10240 + (header.length + 1) * 12, std::ifstream::beg);
+  in.seekg(32 + 10240, ifstream::beg);
 
   uint64_t key;
   int offset;
-  for (int i = 0; i < header.length + 1; i++) {
+  for (int i = 0; i < header.length; i++) {
     SSTable::read64(in, key);
     SSTable::read32(in, offset);
     index.emplace_back(key, offset);

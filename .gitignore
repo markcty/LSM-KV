@@ -7,3 +7,4 @@ workspace.xml
 usage.statistics.xml
 peekSSTable
 out.txt
+/peek

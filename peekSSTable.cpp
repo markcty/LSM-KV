@@ -35,15 +35,18 @@ void peek(string fileName) {
   // read keys and offsets
   vector<uint64_t> keys;
   vector<int> offsets;
+  uint64_t key;
+  int offset;
   for (int i = 0; i < length; i++) {
-    uint64_t key;
-    int offset;
     read64(in, key);
     read32(in, offset);
     keys.push_back(key);
     offsets.push_back(offset);
   }
-  offsets.push_back(int(size - in.tellg()));
+  read64(in, key);
+  read32(in, offset);
+  keys.push_back(key);
+  offsets.push_back(offset);
 
   SSTableDic dic;
   // read values
@@ -59,12 +62,12 @@ void peek(string fileName) {
     dic.emplace_back(keys[i], value);
   }
 
+  cout << ">>>>> File <<<<<" << endl;
   cout << fileName << endl;
-  cout << "***Header***" << endl;
-  cout << timeStamp << endl
-       << length << endl
-       << minKey << endl
-       << maxKey << endl
+  cout << "TimeStamp: " << timeStamp << endl
+       << "Length: " << length << endl
+       << "minKey: " << minKey << endl
+       << "maxKey: " << maxKey << endl
        << endl;
 
   if (v) {
@@ -79,7 +82,9 @@ void peek(string fileName) {
 int main() {
 
   int level;
+  cout << "Input level: ";
   cin >> level;
+  cout << "Verbose?: ";
   cin >> v;
 
   vector<string> files;

@@ -7,8 +7,8 @@
 
 class PersistenceTest : public Test {
  private:
-  const uint64_t TEST_MAX = 1024 * 2;
-  void prepare(uint64_t max) {
+  const uint64_t TEST_MAX = 1024 * 32;
+  [[noreturn]] void prepare(uint64_t max) {
     uint64_t i;
 
     // Clean up

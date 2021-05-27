@@ -6,18 +6,18 @@ KVStore::KVStore(const string &_storagePath) :
   ios_base::sync_with_stdio(false); // turn off sync to accelerate
   // build cache
   string dir = storagePath + "/level-0";
-  vector<string> files;
   int level = 0;
-  while (utils::dirExists(dir) && utils::scanDir(dir, files) > 0) {
+  while (utils::dirExists(dir)) {
+    vector<string> files;
+    utils::scanDir(dir, files);
     for (const auto &file:files) {
       auto fileName = dir + "/" + file;// NOLINT(performance-inefficient-string-concatenation)}
       cache.emplace(fileName, new SSTableCache(fileName));
 
       // check file numbers to avoid duplicate file names
-      fileNums = max(stoi(file), fileNums);
+      fileNums = max(stoi(file) + 1, fileNums);
     }
     dir = storagePath + "/level-" + to_string(++level);
-    files.clear();
   }
 }
 
@@ -247,11 +247,13 @@ int KVStore::pow2(int n) {
 }
 
 KVStore::~KVStore() {
-  if (!utils::dirExists(storagePath + "/level-0")) utils::mkdir((storagePath + "/level-0").c_str());
-  auto fileName = storagePath + "/level-0/" + to_string(fileNums++);
-  SSTable::toSSTable(memTable, fileName, timeStamp);
-  cache.emplace(fileName, new SSTableCache(memTable, timeStamp, fileName));
-  compaction(0);
+  if (memTable.getLength() > 0) {
+    if (!utils::dirExists(storagePath + "/level-0")) utils::mkdir((storagePath + "/level-0").c_str());
+    auto fileName = storagePath + "/level-0/" + to_string(fileNums++);
+    SSTable::toSSTable(memTable, fileName, timeStamp);
+    cache.emplace(fileName, new SSTableCache(memTable, timeStamp, fileName));
+    compaction(0);
+  }
 
   for (auto &c:cache) delete c.second;
 }
