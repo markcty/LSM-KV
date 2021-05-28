@@ -1,48 +1,57 @@
 #include <iostream>
 #include <vector>
 #include "kvstore.h"
+#include "utils.h"
 #include <cstdlib>
+#include <random>
+
 using namespace std;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::nanoseconds;
+using std::chrono::milliseconds;
+
+class PutDelayTest {
+ private:
+  KVStore store;
+  int max;
+  random_device rd;
+  mt19937 mt;
+  bool verbose;
+  string path;
+
+ public:
+  explicit PutDelayTest(const string &path, int max_, bool verbose_)
+      : rd(), mt(rd()), store(path), max(max_), verbose(verbose_), path(path) {
+
+  }
+  void startTest() {
+    if (utils::dirExists(path)) {
+      string cmd = "rm -rf " + path;
+      system(cmd.c_str());
+    }
+
+    cout << ">>>>> Put Delay Test <<<<<" << endl;
+
+    uniform_int_distribution<uint64_t> dist(1, 2 * 1024 * 1024 - 1024);
+
+    unsigned long long totalTime = 0;
+    for (int i = 0; i < max; i++) {
+      uint64_t key = dist(mt);
+      auto start = high_resolution_clock::now();
+      store.put(key, string(key, 's'));
+      auto end = high_resolution_clock::now();
+      auto ms = duration_cast<milliseconds>(end - start).count();
+      if (verbose) cout << ms << endl;
+      totalTime += ms;
+    }
+
+    cout << "Average Delay: " << totalTime / (double) max << endl;
+  }
+};
 
 int main() {
-  srand(time(0));
-  KVStore store("../data");
-  vector<uint64_t> keys;
-//  for (uint64_t i = 0; i < 5; i++) store.put(i, to_string(i));
-//  store.del(3);
-//  store.del(1);
-//  cout << store.get(1) << endl;
-//  cout << store.get(2) << endl;
-//  cout << store.get(3) << endl;
-//  cout << store.get(4) << endl;
-//  cout << store.get(0) << endl;
-
-
-//  cout << store.get(5) << endl;
-//  cout << store.get(17736) << endl;
-//  cout << store.get(572736) << endl;
-//
-//  cout << store.get(718282) << endl;
-//  cout << store.get(371828) << endl;
-//
-//  cout << store.get(2371828) << endl;
-//  cout << store.get(7371828) << endl;
-//  cout << store.get(5371828) << endl;
-
-
-
-  for (uint64_t i = 0; i < 1600000; i++) {
-    auto key = i;
-    keys.push_back(key);
-    store.put(key, to_string(key));
-  }
-  cout << keys[5] << " " << store.get(keys[5]) << endl;
-  cout << keys[9] << " " << store.get(keys[9]) << endl;
-  cout << keys[20] << " " << store.get(keys[20]) << endl;
-  cout << keys[718283] << " " << store.get(keys[718283]) << endl;
-  cout << keys[192874] << " " << store.get(keys[192874]) << endl;
-  cout << keys[1192874] << " " << store.get(keys[1192874]) << endl;
-  cout << keys[892874] << " " << store.get(keys[892874]) << endl;
-
-  return 0;
+  PutDelayTest putDelayTest("../data", 1000, false);
+  putDelayTest.startTest();
 }
