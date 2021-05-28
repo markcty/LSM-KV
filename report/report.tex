@@ -22,9 +22,51 @@ LSM Tree(Log-structure Merge Tree)数据结构，于1996年在Patrick O’Neil �
 
 \section{测试}
 \subsection{测试环境}
-CPU为apple m1芯片，
-\subsection{PUT操作延迟测试}
+R7 3700x with SSD
+\subsection{PUT测试}
 \subsubsection{测试方法}
-随机插入大小在1 Byte到近2 MB大小的字符串，
+随机插入1000个大小在1 Byte到近2 MB大小的字符串，测试平均延时。连续测试三次，其中一次测试的结果如下：
+\begin{verbatim}
+  >>>>> Put Delay Test <<<<<
+  0...100...200...300...400...500...600...700...800...900...
+  Average Delay For Different Size Data: 
+  0 ~ 0.25MB   : 4.50ms throughput: 222.41/s
+  0.25MB ~ 1MB : 17.47ms throughput: 57.23/s
+  0.5MB ~ 1MB  : 43.40ms throughput: 23.04/s
+  1MB ~ 1.5MB  : 39.84ms throughput: 25.10/s
+  1.5MB ~ 2MB  : 44.82ms throughput: 22.31/s
+  Average Delay: 34.28ms Average Throughput: 29.17/s
+  
+  Total Size Insert: 979MB
+  Total Time: 34s
+\end{verbatim}
+
+\subsubsection{预期结果}
+每次测试平均延时近似，随着数据大小的上升，触发compaction的机率越大，延时也相应越大。
+
+\subsubsection{实际结果}
+\begin{tabular}{cc}
+  \hline
+  测试编号 & 平均延时 \\
+  \hline
+  1        & 31.692ms \\
+  2        & 31.004ms \\
+  3        & 30.934ms \\
+
+  \hline
+\end{tabular}
+
+可见每次测试平均延时相似
+
+\begin{tabular}{cccccc}
+  \hline
+  (MB) & 0-0.25 & 0.25-0.5 & 0.5-1.0 & 1-1.5 & 1.5-2.0 \\
+  \hline
+  (ms) & 4.50   & 17.72    & 31.69   & 41.87 & 40.52   \\
+
+  \hline
+\end{tabular}
+
+可见随数据量增大，平均延时增加，但由于1MB以上的数据触发compaction的机率都较大，所以1MB以上的数据增加量不明显。
 
 \end{document}
