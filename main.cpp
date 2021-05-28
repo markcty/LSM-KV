@@ -1,16 +1,18 @@
+#include <chrono>
+#include <cstdlib>
 #include <iostream>
+#include <random>
 #include <vector>
+
 #include "kvstore.h"
 #include "utils.h"
-#include <cstdlib>
-#include <random>
 
 using namespace std;
-using std::chrono::high_resolution_clock;
-using std::chrono::duration_cast;
 using std::chrono::duration;
-using std::chrono::nanoseconds;
+using std::chrono::duration_cast;
+using std::chrono::high_resolution_clock;
 using std::chrono::milliseconds;
+using std::chrono::nanoseconds;
 
 class PutDelayTest {
  private:
@@ -23,9 +25,7 @@ class PutDelayTest {
 
  public:
   explicit PutDelayTest(const string &path, int max_, bool verbose_)
-      : rd(), mt(rd()), store(path), max(max_), verbose(verbose_), path(path) {
-
-  }
+      : rd(), mt(rd()), store(path), max(max_), verbose(verbose_), path(path) {}
   void startTest() {
     if (utils::dirExists(path)) {
       string cmd = "rm -rf " + path;
@@ -47,7 +47,7 @@ class PutDelayTest {
       totalTime += ms;
     }
 
-    cout << "Average Delay: " << totalTime / (double) max << endl;
+    cout << "Average Delay: " << totalTime / (double)max << endl;
   }
 };
 

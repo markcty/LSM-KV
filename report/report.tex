@@ -1,0 +1,30 @@
+\documentclass{ctexart}
+
+\title{LSM Tree实验报告}
+\author{陈天予 519021910045}
+\date{\today}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\begin{document}
+
+\maketitle
+
+\section{背景介绍}
+LSM Tree(Log-structure Merge Tree)数据结构，于1996年在Patrick O’Neil 等人的一篇论文提出。其通过SS-Table的多层储存结构，利用磁盘顺序读写的高效性，实现了性能极高的写操作。LSM Tree被广泛地在各种NoSQL中使用，比如HBase，LevelDB等。
+
+\section{挑战}
+\begin{enumerate}
+  \item 持久化：之前写过的程序，数据结构都在内存中，很少涉及到文件的读写。LSM Tree通过客制化结构的SSTable实现持久化，需要通过二进制的方式来读写sst文件，因不熟悉c++相关的库函数而导致的bug就不少。
+  \item sst文件的debug：由于sst文件在硬盘中，debug的过程中无法实时看到其中的数据，造成许多麻烦和障碍。最终写了一个peekSSTable的小程序扫描sst文件并输出debug信息，解决了debug时的困难。
+\end{enumerate}
+
+\section{测试}
+\subsection{测试环境}
+CPU为apple m1芯片，
+\subsection{PUT操作延迟测试}
+\subsubsection{测试方法}
+随机插入大小在1 Byte到近2 MB大小的字符串，
+
+\end{document}

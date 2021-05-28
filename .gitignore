@@ -8,3 +8,7 @@ usage.statistics.xml
 peekSSTable
 out.txt
 /peek
+/build
+/report/*
+!/report/report.tex
+!/report/*.jpg

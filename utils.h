@@ -1,15 +1,17 @@
 #ifndef LSM_KV__UTILS_H_
 #define LSM_KV__UTILS_H_
 
-#include <sstream>
 #include <sys/stat.h>
-#include <vector>
 #include <sys/types.h>
+
+#include <cstring>
+#include <sstream>
+#include <vector>
 
 #ifdef _WIN32
 #include <direct.h>
-#include <stdio.h>
 #include <io.h>
+#include <stdio.h>
 #include <windows.h>
 #endif
 #if defined(__linux__) || defined(__MINGW32__) || defined(__APPLE__)
@@ -36,31 +38,30 @@ static inline bool dirExists(std::string path) {
  * @return files number.
  */
 #if defined(_WIN32) && !defined(__MINGW32__)
-static inline int scanDir(std::string path, std::vector<std::string> &ret){
-        std::string extendPath;
-        if(path[path.size() - 1] == '/'){
-            extendPath = path + "*";
-        }
-        else{
-            extendPath = path + "/*";
-        }
-        WIN32_FIND_DATAA fd;
-        HANDLE h = FindFirstFileA(extendPath.c_str(), &fd);
-        if(h == INVALID_HANDLE_VALUE){
-            return 0;
-        }
-        while(true){
-            std::string ss(fd.cFileName);
-            if(ss[0] != '.'){
-                ret.push_back(ss);
-            }
-            if(FindNextFile(h, &fd) ==false){
-                break;
-            }
-        }
-        FindClose(h);
-        return ret.size();
+static inline int scanDir(std::string path, std::vector<std::string> &ret) {
+  std::string extendPath;
+  if (path[path.size() - 1] == '/') {
+    extendPath = path + "*";
+  } else {
+    extendPath = path + "/*";
+  }
+  WIN32_FIND_DATAA fd;
+  HANDLE h = FindFirstFileA(extendPath.c_str(), &fd);
+  if (h == INVALID_HANDLE_VALUE) {
+    return 0;
+  }
+  while (true) {
+    std::string ss(fd.cFileName);
+    if (ss[0] != '.') {
+      ret.push_back(ss);
     }
+    if (FindNextFile(h, &fd) == false) {
+      break;
+    }
+  }
+  FindClose(h);
+  return ret.size();
+}
 #endif
 #if defined(__linux__) || defined(__MINGW32__) || defined(__APPLE__)
 static inline int scanDir(std::string path, std::vector<std::string> &ret) {
@@ -137,5 +138,5 @@ static inline int rmfile(const char *path) {
   return ::unlink(path);
 #endif
 }
-}
-#endif //LSM_KV__UTILS_H_
+}  // namespace utils
+#endif  // LSM_KV__UTILS_H_

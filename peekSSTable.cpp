@@ -1,25 +1,23 @@
-#include <iostream>
-#include <vector>
 #include <fstream>
-#include "utils.h"
+#include <iostream>
 #include <string>
+#include <vector>
+
+#include "utils.h"
 
 int v;
 
 using namespace std;
 using SSTableDic = vector<pair<uint64_t, string>>;
 
-void read64(ifstream &in, uint64_t &n) {
-  in.read((char *) &n, 8);
-}
+void read64(ifstream &in, uint64_t &n) { in.read((char *)&n, 8); }
 
-void read32(ifstream &in, int &n) {
-  in.read((char *) &n, 4);
-}
+void read32(ifstream &in, int &n) { in.read((char *)&n, 4); }
 
 void peek(string fileName) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
-  if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
+  if (in.fail())
+    throw runtime_error("readDic: Open file " + fileName + " failed!");
   in.seekg(0, in.end);
   auto size = in.tellg();
 
@@ -71,7 +69,7 @@ void peek(string fileName) {
        << endl;
 
   if (v) {
-    for (auto pair:dic) {
+    for (auto pair : dic) {
       cout << pair.first << ": " << pair.second.size() << endl;
     }
   }
@@ -80,7 +78,6 @@ void peek(string fileName) {
 }
 
 int main() {
-
   int level;
   cout << "Input level: ";
   cin >> level;
@@ -90,5 +87,5 @@ int main() {
   vector<string> files;
   string path = "./data/level-" + to_string(level);
   utils::scanDir(path, files);
-  for (auto file:files) peek(path + "/" + file);
+  for (auto file : files) peek(path + "/" + file);
 }
