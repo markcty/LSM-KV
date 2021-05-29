@@ -11,4 +11,4 @@ out.txt
 /build
 /report/*
 !/report/report.tex
-!/report/*.jpg
+!/report/*.png

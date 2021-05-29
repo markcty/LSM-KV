@@ -18,55 +18,78 @@ LSM Tree(Log-structure Merge Tree)数据结构，于1996年在Patrick O’Neil �
 \begin{enumerate}
   \item 持久化：之前写过的程序，数据结构都在内存中，很少涉及到文件的读写。LSM Tree通过客制化结构的SSTable实现持久化，需要通过二进制的方式来读写sst文件，因不熟悉c++相关的库函数而导致的bug就不少。
   \item sst文件的debug：由于sst文件在硬盘中，debug的过程中无法实时看到其中的数据，造成许多麻烦和障碍。最终写了一个peekSSTable的小程序扫描sst文件并输出debug信息，解决了debug时的困难。
+  \item 一个难以复现的bug：在调试过程中，有一次发现一个难以复现的bug，复盘半天发现一个现象，如果两次debug时间间隔较长，这个bug就不会出现，反之就有很高机率出现。最终发现竟然是一个函数中忘记关闭文件，使得打开了过多的文件，在操作系统还未回收完这些fd前运行程序就有可能出现这个bug。
 \end{enumerate}
 
 \section{测试}
-\subsection{测试环境}
-R7 3700x with SSD
-\subsection{PUT测试}
-\subsubsection{测试方法}
-随机插入1000个大小在1 Byte到近2 MB大小的字符串，测试平均延时。连续测试三次，其中一次测试的结果如下：
-\begin{verbatim}
-  >>>>> Put Delay Test <<<<<
-  0...100...200...300...400...500...600...700...800...900...
-  Average Delay For Different Size Data: 
-  0 ~ 0.25MB   : 4.50ms throughput: 222.41/s
-  0.25MB ~ 1MB : 17.47ms throughput: 57.23/s
-  0.5MB ~ 1MB  : 43.40ms throughput: 23.04/s
-  1MB ~ 1.5MB  : 39.84ms throughput: 25.10/s
-  1.5MB ~ 2MB  : 44.82ms throughput: 22.31/s
-  Average Delay: 34.28ms Average Throughput: 29.17/s
-  
-  Total Size Insert: 979MB
-  Total Time: 34s
-\end{verbatim}
 
+\subsection{测试环境}
+AMD R7 3700x with SSD in Ubuntu 20.04 LTS
+
+\subsection{性能测试}
+
+\subsubsection{测试方法}
+插入1000个随机大小在1 Byte到近2 MB的字符串（总数据量大约再1G左右），随后打乱所有keys，执行GET操作，再打乱所有keys，执行DELETE操作。重复上述方法连续测试三次，测试各方法的平均延时和吞吐。
 \subsubsection{预期结果}
-每次测试平均延时近似，随着数据大小的上升，触发compaction的机率越大，延时也相应越大。
+\begin{enumerate}
+  \item 对每次测试：测试结果应该相近。
+  \item 对PUT操作：随着插入数据量的增大，触发compaction的机率也越大，吞吐也越低。
+  \item 对PUT操作：随着GET数据量的增大，吞吐也会越低。
+  \item 对DELETE操作：由于DELETE操作相当于插入一个小字符串，所以对于不同大小的数据吞吐应该相同。但由于在del需要先判断key是否在数据库中，所以总体来说，其吞吐量趋势应与PUT类似，并稍低一些，因为其有可能触发compaction操作。
+\end{enumerate}
 
 \subsubsection{实际结果}
-\begin{tabular}{cc}
-  \hline
-  测试编号 & 平均延时 \\
-  \hline
-  1        & 31.692ms \\
-  2        & 31.004ms \\
-  3        & 30.934ms \\
+测试的结果如下：
+\begin{verbatim}
+    >>>>> Put Delay Test <<<<<
+    0...100...200...300...400...500...600...700...800...900...
+    Average Delay For Different Size Data:
+    0 ~ 0.25MB     : 3.94ms throughput: 254.00/s
+    0.25MB ~ 0.5MB : 8.80ms throughput: 113.58/s
+    0.5MB ~ 1MB    : 21.98ms throughput: 45.49/s
+    1MB ~ 1.5MB    : 42.43ms throughput: 23.57/s
+    1.5MB ~ 2MB    : 44.75ms throughput: 22.35/s
+    
+    Average Delay: 28.00ms, Average Throughput: 35.72/s
+    Total Size Insert: 961MB
+    
+    >>>>> Get Delay Test <<<<<
+    Average Delay And Throughput For Different Size Data:
+    0 ~ 0.25MB     : 98.67ms throughput: 10134.66/s
+    0.25MB ~ 0.5MB : 137.13ms throughput: 7292.47/s
+    0.5MB ~ 1MB    : 180.61ms throughput: 5536.77/s
+    1MB ~ 1.5MB    : 238.53ms throughput: 4192.35/s
+    1.5MB ~ 2MB    : 292.84ms throughput: 3414.80/s
+    
+    Average Delay: 203.35µs, Average Throughput: 4917.65/s
+    
+    >>>>> Delete Delay Test <<<<<
+    Average Delay And Throughput For Different Size Data:
+    0 ~ 0.25MB     : 100.34ms throughput: 9965.85/s
+    0.25MB ~ 0.5MB : 142.98ms throughput: 6993.74/s
+    0.5MB ~ 1MB    : 192.80ms throughput: 5186.74/s
+    1MB ~ 1.5MB    : 262.21ms throughput: 3813.78/s
+    1.5MB ~ 2MB    : 327.54ms throughput: 3053.05/s
+    
+    Average Delay: 221.23µs, Average Throughput: 4520.18/s
+    
+    >>>>> Summary <<<<<
+    It takes 28s to complete the test.
+\end{verbatim}
 
-  \hline
-\end{tabular}
-
-可见每次测试平均延时相似
-
-\begin{tabular}{cccccc}
-  \hline
-  (MB) & 0-0.25 & 0.25-0.5 & 0.5-1.0 & 1-1.5 & 1.5-2.0 \\
-  \hline
-  (ms) & 4.50   & 17.72    & 31.69   & 41.87 & 40.52   \\
-
-  \hline
-\end{tabular}
-
-可见随数据量增大，平均延时增加，但由于1MB以上的数据触发compaction的机率都较大，所以1MB以上的数据增加量不明显。
+\subsubsection{结果分析}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.3]{GET.png}
+  \caption{GET对于不同数据量的吞吐}
+  \label{fig:GET}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.3]{PUT-DELETE.png}
+  \caption{PUT，DELETE对于不同数据量的吞吐}
+  \label{fig:PUT-DELETE}
+\end{figure}
+测试结果与预期相符。不足之处在于PUT操作的测试颗粒度不够，对于小数据量的测试不够完全。
 
 \end{document}
