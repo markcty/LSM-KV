@@ -12,3 +12,4 @@ out.txt
 /report/*
 !/report/report.tex
 !/report/*.png
+!/report/*.md
