@@ -154,15 +154,15 @@ class GetDelayTest {
     cout << ">>>>> Get Test <<<<<" << endl;
     cout << "Average Delay And Throughput For Different Size Data: " << endl;
     cout << fixed << setprecision(2);
-    cout << "0 ~ 0.25MB     : " << avgTime[0] << "ms "
+    cout << "0 ~ 0.25MB     : " << avgTime[0] << "µs "
          << "throughput: " << throughput[0] << "/s" << endl;
-    cout << "0.25MB ~ 0.5MB : " << avgTime[1] << "ms "
+    cout << "0.25MB ~ 0.5MB : " << avgTime[1] << "µs "
          << "throughput: " << throughput[1] << "/s" << endl;
-    cout << "0.5MB ~ 1MB    : " << avgTime[2] << "ms "
+    cout << "0.5MB ~ 1MB    : " << avgTime[2] << "µs "
          << "throughput: " << throughput[2] << "/s" << endl;
-    cout << "1MB ~ 1.5MB    : " << avgTime[3] << "ms "
+    cout << "1MB ~ 1.5MB    : " << avgTime[3] << "µs "
          << "throughput: " << throughput[3] << "/s" << endl;
-    cout << "1.5MB ~ 2MB    : " << avgTime[4] << "ms "
+    cout << "1.5MB ~ 2MB    : " << avgTime[4] << "µs "
          << "throughput: " << throughput[4] << "/s" << endl;
     cout << endl;
     cout << "Average Delay: " << totalTime / (double)keys.size() << "µs, "
@@ -218,15 +218,15 @@ class DeleteDelayTest {
     cout << ">>>>> Delete Test <<<<<" << endl;
     cout << "Average Delay And Throughput For Different Size Data: " << endl;
     cout << fixed << setprecision(2);
-    cout << "0 ~ 0.25MB     : " << avgTime[0] << "ms "
+    cout << "0 ~ 0.25MB     : " << avgTime[0] << "µs "
          << "throughput: " << throughput[0] << "/s" << endl;
-    cout << "0.25MB ~ 0.5MB : " << avgTime[1] << "ms "
+    cout << "0.25MB ~ 0.5MB : " << avgTime[1] << "µs "
          << "throughput: " << throughput[1] << "/s" << endl;
-    cout << "0.5MB ~ 1MB    : " << avgTime[2] << "ms "
+    cout << "0.5MB ~ 1MB    : " << avgTime[2] << "µs "
          << "throughput: " << throughput[2] << "/s" << endl;
-    cout << "1MB ~ 1.5MB    : " << avgTime[3] << "ms "
+    cout << "1MB ~ 1.5MB    : " << avgTime[3] << "µs "
          << "throughput: " << throughput[3] << "/s" << endl;
-    cout << "1.5MB ~ 2MB    : " << avgTime[4] << "ms "
+    cout << "1.5MB ~ 2MB    : " << avgTime[4] << "µs "
          << "throughput: " << throughput[4] << "/s" << endl;
     cout << endl;
     cout << "Average Delay: " << totalTime / (double)keys.size() << "µs, "
