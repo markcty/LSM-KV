@@ -281,7 +281,7 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp,
 }
 
 string SSTableCache::get(uint64_t key) const {
-  if (!(header.minKey <= key && key <= header.maxKey)) return "";
+  // if (!(header.minKey <= key && key <= header.maxKey)) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail())

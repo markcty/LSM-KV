@@ -237,6 +237,12 @@ class DeleteDelayTest {
 };
 
 int main() {
+  string path = "../data";
+  if (utils::dirExists(path)) {
+    string cmd = "rm -rf " + path;
+    system(cmd.c_str());
+  }
+
   auto start = high_resolution_clock::now();
   PutDelayTest putDelayTest(1000, false);
   auto keys = putDelayTest.startTest();
@@ -244,7 +250,6 @@ int main() {
   GetDelayTest::startTest(keys);
   DeleteDelayTest::startTest(keys);
 
-  string path = "../data";
   if (utils::dirExists(path)) {
     string cmd = "rm -rf " + path;
     system(cmd.c_str());
