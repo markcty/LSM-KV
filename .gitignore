@@ -13,3 +13,4 @@ out.txt
 !/report/report.tex
 !/report/*.png
 !/report/*.md
+!/report/*.txt

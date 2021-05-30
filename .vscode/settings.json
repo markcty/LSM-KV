@@ -2,6 +2,7 @@
   "files.associations": {
     "chrono": "cpp",
     "ostream": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "*.tcc": "cpp"
   }
 }
