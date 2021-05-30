@@ -80,7 +80,7 @@ AMD R7 3700x with SSD in Ubuntu 20.04 LTS
 
 \subsubsection{结果分析}
 测试结果与预期相符。不足之处在于PUT操作的测试颗粒度不够，对于小数据量的测试不够完全。
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \subfigure[GET]
   {\includegraphics[width=4cm]{GET.png}}
@@ -93,13 +93,21 @@ AMD R7 3700x with SSD in Ubuntu 20.04 LTS
 \subsection{索引缓存与Bloom Filter的效果测试}
 
 \subsubsection{测试方法}
-测试脚本与性能测试相同，不同版本的代码存放在不同的git分支中，其中无缓存版本对应着naive分支，缓存索引信息的版本对应着index\_cached分支，完全版本在master中。
+测试脚本与性能测试相同，不同版本的代码存放在不同的git分支中，其中无缓存版本对应着naive分支，缓存索引信息的版本对应着index\_cached分支，完全版本在index\_cached\_with\_bf分支中。
 
 \subsubsection{预期结果}
 三种测试中GET操作的平均时延应有显著差距，但同种测试之间对不同数据大小的时延变化趋势应与性能测试中的相同。
 
 \subsubsection{实际结果}
 因篇幅限制，实际输出放在了cache\_test.md中，这里只放图表。
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=8cm]{Strategy.png}
+  \caption{不同策略下的吞吐量}
+\end{figure}
+
+\subsubsection{结果分析}
+可以看到，三种不同的策略的吞吐量有显著区别。其中有无Bloom Filter在数据量较小时对性能影响较大，原因在于数据量较小时索引量较大，及时是二分查找也需要log(n)的时间，相比Bloom Filter的O(1)复杂度会逊色不少。值得一提的是，在无缓存的策略下，吞吐量反而随着数据量的大小上升而上升，猜测原因在于大数据量下一个SSTable中存的数据反而少，因此在索引过程所花费的时间反而较少。
 
 
 \end{document}
