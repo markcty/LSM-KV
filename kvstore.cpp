@@ -36,7 +36,7 @@ void KVStore::put(uint64_t key, const string &value) {
     if (!utils::dirExists(storagePath + "/level-0"))
       utils::mkdir((storagePath + "/level-0").c_str());
 
-    auto fileName = storagePath + "/level-0/" + to_string(fileNums++);
+    auto fileName = storagePath + "/level-0/" + to_string(fileNums++) + ".sst";
     SSTable::toSSTable(memTable, fileName, timeStamp);
     cache.emplace(fileName, new SSTableCache(memTable, timeStamp, fileName));
     timeStamp++;
@@ -223,7 +223,7 @@ void KVStore::compaction(int level) {
     if (lastLevel && pair.second == "~DELETED~") continue;
 
     if (overflow(length + 1, valueSize + pair.second.size())) {
-      auto fileName = nextDir + "/" + to_string(fileNums++);
+      auto fileName = nextDir + "/" + to_string(fileNums++) + ".sst";
       SSTable::toSSTable(t, fileName, maxTimeStamp);
       cache.emplace(fileName, new SSTableCache(t, maxTimeStamp, fileName));
       valueSize = 0;
@@ -247,7 +247,7 @@ void KVStore::compaction(int level) {
 
   // convert the remaining key value pairs to a SSTable
   if (!t.empty()) {
-    auto fileName = nextDir + "/" + to_string(fileNums++);
+    auto fileName = nextDir + "/" + to_string(fileNums++) + ".sst";
     SSTable::toSSTable(t, fileName, maxTimeStamp);
     cache.emplace(fileName, new SSTableCache(t, maxTimeStamp, fileName));
   }
@@ -266,7 +266,7 @@ KVStore::~KVStore() {
   if (memTable.getLength() > 0) {
     if (!utils::dirExists(storagePath + "/level-0"))
       utils::mkdir((storagePath + "/level-0").c_str());
-    auto fileName = storagePath + "/level-0/" + to_string(fileNums++);
+    auto fileName = storagePath + "/level-0/" + to_string(fileNums++) + ".sst";
     SSTable::toSSTable(memTable, fileName, timeStamp);
     cache.emplace(fileName, new SSTableCache(memTable, timeStamp, fileName));
     compaction(0);
