@@ -1,11 +1,15 @@
 #include "SSTable.h"
 
 #include <utility>
+
 #include "MurmurHash3.h"
 
-void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64_t timeStamp) {
+void SSTable::toSSTable(const SkipList &memTable, const string &fileName,
+                        uint64_t timeStamp) {
   ofstream out(fileName, ios::out | ios::binary | ios::trunc);
-  if (out.fail()) throw runtime_error("toSSTable(SkipList): open file " + fileName + " failed!");
+  if (out.fail())
+    throw runtime_error("toSSTable(SkipList): open file " + fileName +
+                        " failed!");
 
   auto length = memTable.getLength();
   auto min = memTable.getMinKey();
@@ -45,7 +49,8 @@ void SSTable::toSSTable(const SkipList &memTable, const string &fileName, uint64
 
 SSTableHeader SSTable::readHeader(const string &fileName) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
-  if (in.fail()) throw runtime_error("readHeader: Open file " + fileName + " failed!");
+  if (in.fail())
+    throw runtime_error("readHeader: Open file " + fileName + " failed!");
   uint64_t timeStamp, length, minKey, maxKey;
   read64(in, timeStamp);
   read64(in, length);
@@ -57,14 +62,15 @@ SSTableHeader SSTable::readHeader(const string &fileName) {
 
 void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
-  if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
+  if (in.fail())
+    throw runtime_error("readDic: Open file " + fileName + " failed!");
   in.seekg(0, ifstream::end);
   auto size = in.tellg();
 
   uint64_t length;
-  in.seekg(8, ifstream::beg); // skip timeStamp
+  in.seekg(8, ifstream::beg);  // skip timeStamp
   read64(in, length);
-  in.seekg(10272, ifstream::beg); // skip header and bloomFilter
+  in.seekg(10272, ifstream::beg);  // skip header and bloomFilter
 
   // read keys and offsets
   vector<uint64_t> keys;
@@ -83,7 +89,6 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
 
   // read values
   for (int i = 0; i < length; i++) {
-
     auto valueSize = offsets[i + 1] - offsets[i];
     char *buf = new char[valueSize + 1];
     in.read(buf, valueSize);
@@ -96,9 +101,11 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   in.close();
 }
 
-void SSTable::toSSTable(const SSTableDic &dic, const string &fileName, uint64_t timeStamp) {
+void SSTable::toSSTable(const SSTableDic &dic, const string &fileName,
+                        uint64_t timeStamp) {
   ofstream out(fileName, ios::out | ios::binary | ios::trunc);
-  if (out.fail()) throw runtime_error("toSSTable(dic): Open file " + fileName + " failed!");
+  if (out.fail())
+    throw runtime_error("toSSTable(dic): Open file " + fileName + " failed!");
 
   auto length = dic.size();
   auto min = dic[0].first;
@@ -116,7 +123,7 @@ void SSTable::toSSTable(const SSTableDic &dic, const string &fileName, uint64_t 
 
   // Key, Offset
   uint32_t offset = 0;
-  for (const auto &pair:dic) {
+  for (const auto &pair : dic) {
     write64(out, pair.first);
     write32(out, offset);
     offset += pair.second.size();
@@ -125,37 +132,30 @@ void SSTable::toSSTable(const SSTableDic &dic, const string &fileName, uint64_t 
   write32(out, offset);
 
   // Value
-  for (const auto &pair:dic) {
-    out.write(pair.second.c_str(), (long) pair.second.size());
+  for (const auto &pair : dic) {
+    out.write(pair.second.c_str(), (long)pair.second.size());
   }
 
   out.close();
 }
 
-void SSTable::write64(ofstream &out, uint64_t n) {
-  out.write((char *) &n, 8);
-}
+void SSTable::write64(ofstream &out, uint64_t n) { out.write((char *)&n, 8); }
 
-void SSTable::write32(ofstream &out, uint32_t n) {
-  out.write((char *) &n, 4);
-}
+void SSTable::write32(ofstream &out, uint32_t n) { out.write((char *)&n, 4); }
 
-void SSTable::read64(ifstream &in, uint64_t &n) {
-  in.read((char *) &n, 8);
-}
+void SSTable::read64(ifstream &in, uint64_t &n) { in.read((char *)&n, 8); }
 
-void SSTable::read32(ifstream &in, int &n) {
-  in.read((char *) &n, 4);
-}
+void SSTable::read32(ifstream &in, int &n) { in.read((char *)&n, 4); }
 
 string SSTable::get(const string &fileName, uint64_t key) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
-  if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
+  if (in.fail())
+    throw runtime_error("readDic: Open file " + fileName + " failed!");
 
-  in.seekg(8, ifstream::beg); // skip timeStamp
+  in.seekg(8, ifstream::beg);  // skip timeStamp
   uint64_t length;
   read64(in, length);
-  in.seekg(10272, ifstream::beg); // skip header and bloomFilter
+  in.seekg(10272, ifstream::beg);  // skip header and bloomFilter
 
   int offset = -1;
   int valueSize = -1;
@@ -184,8 +184,9 @@ string SSTable::get(const string &fileName, uint64_t key) {
   return value;
 }
 
-SSTableHeader::SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey, uint64_t _maxKey) :
-    timeStamp(_timeStamp), length(_size), minKey(_minKey), maxKey(_maxKey) {}
+SSTableHeader::SSTableHeader(uint64_t _timeStamp, uint64_t _size,
+                             uint64_t _minKey, uint64_t _maxKey)
+    : timeStamp(_timeStamp), length(_size), minKey(_minKey), maxKey(_maxKey) {}
 
 SSTableHeader::SSTableHeader() = default;
 
@@ -208,13 +209,15 @@ void BloomFilter::write(ofstream &out) {
   out.seekp(32, std::ofstream::beg);
   for (int i = 0; i < 10240 * 8; i += 8) {
     char temp = false;
-    for (int j = 0; j <= 7; j++) temp |= bits[i + j] << j; // NOLINT(cppcoreguidelines-narrowing-conversions)
+    for (int j = 0; j <= 7; j++)
+      temp |=
+          bits[i + j] << j;  // NOLINT(cppcoreguidelines-narrowing-conversions)
     out.write(&temp, sizeof(temp));
   }
 }
 
 BloomFilter::BloomFilter(const SSTableDic &dic) {
-  for (const auto &pair:dic) {
+  for (const auto &pair : dic) {
     unsigned int hash[4] = {0};
     MurmurHash3_x64_128(&pair.first, sizeof(pair.first), 1, &hash);
     bits[hash[0] % (10240 * 8)] = true;
@@ -230,23 +233,21 @@ BloomFilter::BloomFilter(ifstream &in) {
   in.read(buffer, 10240);
   int p = 0;
   for (char c : buffer) {
-    for (int i = 0; i < 8; i++)
-      bits[p++] = (c >> i) & 1;
+    for (int i = 0; i < 8; i++) bits[p++] = (c >> i) & 1;
   }
 }
 
 bool BloomFilter::exists(uint64_t key) const {
   unsigned int hash[4] = {0};
   MurmurHash3_x64_128(&key, sizeof(key), 1, &hash);
-  return bits[hash[0] % (10240 * 8)]
-      && bits[hash[1] % (10240 * 8)]
-      && bits[hash[2] % (10240 * 8)]
-      && bits[hash[3] % (10240 * 8)];
+  return bits[hash[0] % (10240 * 8)] && bits[hash[1] % (10240 * 8)] &&
+         bits[hash[2] % (10240 * 8)] && bits[hash[3] % (10240 * 8)];
 }
 
 BloomFilter::BloomFilter() = default;
 
-SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName)
+SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp,
+                           string _fileName)
     : fileName(std::move(_fileName)), bloomFilter(memTable) {
   header.length = memTable.getLength();
   header.minKey = memTable.getMinKey();
@@ -263,7 +264,8 @@ SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp, string 
   index.emplace_back(0, offset);
 }
 
-SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName)
+SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp,
+                           string _fileName)
     : fileName(std::move(_fileName)), bloomFilter(dic) {
   header.length = dic.size();
   header.minKey = dic.front().first;
@@ -271,7 +273,7 @@ SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fi
   header.timeStamp = timeStamp;
 
   uint32_t offset = 0;
-  for (const auto &pair:dic) {
+  for (const auto &pair : dic) {
     index.emplace_back(pair.first, offset);
     offset += pair.second.size();
   }
@@ -286,7 +288,8 @@ string SSTableCache::get(uint64_t key) const {
   if (low->first != key) return "";
 
   ifstream in(fileName, ios_base::in | ios_base::binary);
-  if (in.fail()) throw runtime_error("readDic: Open file " + fileName + " failed!");
+  if (in.fail())
+    throw runtime_error("readDic: Open file " + fileName + " failed!");
 
   auto offset = low->second;
   low++;
@@ -305,13 +308,12 @@ string SSTableCache::get(uint64_t key) const {
   return value;
 }
 
-SSTableHeader SSTableCache::getHeader() const {
-  return header;
-}
+SSTableHeader SSTableCache::getHeader() const { return header; }
 
 SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
-  if (in.fail()) throw runtime_error("readHeader: Open file " + fileName + " failed!");
+  if (in.fail())
+    throw runtime_error("readHeader: Open file " + fileName + " failed!");
 
   SSTable::read64(in, header.timeStamp);
   SSTable::read64(in, header.length);

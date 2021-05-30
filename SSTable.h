@@ -1,9 +1,9 @@
 #ifndef LSM_KV__SSTABLE_H_
 #define LSM_KV__SSTABLE_H_
 
-#include <fstream>
-#include <bitset>
 #include <algorithm>
+#include <bitset>
+#include <fstream>
 
 #include "SkipList.h"
 
@@ -16,13 +16,15 @@ class SSTableHeader {
  public:
   uint64_t timeStamp{}, length{}, minKey{}, maxKey{};
   SSTableHeader();
-  explicit SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey, uint64_t _maxKey);
+  explicit SSTableHeader(uint64_t _timeStamp, uint64_t _size, uint64_t _minKey,
+                         uint64_t _maxKey);
   SSTableHeader(const SSTableHeader &other);
 };
 
 class BloomFilter {
  private:
   bitset<10240 * 8> bits;
+
  public:
   explicit BloomFilter(const SkipList &memTable);
   explicit BloomFilter(const SSTableDic &dic);
@@ -38,9 +40,12 @@ class SSTableCache {
   vector<SSTableIndex> index;
   BloomFilter bloomFilter;
   const string fileName;
+
  public:
-  explicit SSTableCache(const SkipList &memTable, uint64_t timeStamp, string _fileName);
-  explicit SSTableCache(const SSTableDic &dic, uint64_t timeStamp, string _fileName);
+  explicit SSTableCache(const SkipList &memTable, uint64_t timeStamp,
+                        string _fileName);
+  explicit SSTableCache(const SSTableDic &dic, uint64_t timeStamp,
+                        string _fileName);
   explicit SSTableCache(string _fileName);
   string get(uint64_t key) const;
   SSTableHeader getHeader() const;
@@ -59,14 +64,16 @@ class SSTable {
    * @param memTable mem table
    * @param fileName file name
    */
-  static void toSSTable(const SkipList &memTable, const string &fileName, uint64_t timeStamp);
+  static void toSSTable(const SkipList &memTable, const string &fileName,
+                        uint64_t timeStamp);
 
   /**
    * convert a mem table to a SSTable file
    * @param memTable mem table
    * @param fileName file name
    */
-  static void toSSTable(const SSTableDic &dic, const string &fileName, uint64_t timeStamp);
+  static void toSSTable(const SSTableDic &dic, const string &fileName,
+                        uint64_t timeStamp);
 
   /**
    * read the timeStamp from a SSTable file
@@ -91,4 +98,4 @@ class SSTable {
   static string get(const string &fileName, uint64_t key);
 };
 
-#endif //LSM_KV__SSTABLE_H_
+#endif  // LSM_KV__SSTABLE_H_

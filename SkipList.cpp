@@ -1,11 +1,14 @@
 #include "SkipList.h"
 
+#include <assert.h>
+
 SkipList::Node::Node(uint64_t _key, string _value, Node *_right, Node *_down)
     : right(_right), down(_down), key(_key), value(std::move(_value)) {}
 
 SkipList::Node::Node() : right(nullptr), down(nullptr), key(0), value() {}
 
-SkipList::SkipList() : rd(), mt(rd()), head(new Node), length(0), valueSize(0) {}
+SkipList::SkipList()
+    : rd(), mt(rd()), head(new Node), length(0), valueSize(0) {}
 
 void SkipList::put(uint64_t key, const string &value) {
   // if key exists, update the value of all nodes
@@ -94,9 +97,7 @@ bool SkipList::remove(uint64_t key) {
   return true;
 }
 
-bool SkipList::shouldGrowUp() {
-  return mt() & 1;
-}
+bool SkipList::shouldGrowUp() { return mt() & 1; }
 
 void SkipList::reset() {
   while (head) {

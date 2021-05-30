@@ -1,1 +1,55 @@
-#ifndef LSM_KV__KVSTORE_H_#define LSM_KV__KVSTORE_H_#include <string>#include <queue>#include <unistd.h>#include <algorithm>#include <map>#include "kvstore_api.h"#include "SkipList.h"#include "SSTable.h"using namespace std;class KVStore : public KVStoreAPI { private:  string storagePath;  uint64_t timeStamp;  int fileNums;  SkipList memTable;  map<string, SSTableCache *> cache;  // if memTable is large enough to be converted to a SSTable  static inline bool overflow(unsigned long length, unsigned long valueSize);  void compaction(int level);  // utils  // return 2^n  static int pow2(int n);  // extract level from a path  static int getLevel(const string &path); public:  explicit KVStore(const string &_storagePath);  ~KVStore();  void put(uint64_t key, const string &value) override;  string get(uint64_t key) override;  bool del(uint64_t key) override;  void reset() override;};#endif //LSM_KV__KVSTORE_H_
+#ifndef LSM_KV__KVSTORE_H_
+#define LSM_KV__KVSTORE_H_
+
+#include <unistd.h>
+
+#include <algorithm>
+#include <map>
+#include <queue>
+#include <string>
+
+#include "SSTable.h"
+#include "SkipList.h"
+#include "kvstore_api.h"
+
+using namespace std;
+
+class KVStore : public KVStoreAPI {
+ private:
+  string storagePath;
+
+  uint64_t timeStamp;
+
+  int fileNums;
+
+  SkipList memTable;
+
+  map<string, SSTableCache *> cache;
+
+  // if memTable is large enough to be converted to a SSTable
+  static inline bool overflow(unsigned long length, unsigned long valueSize);
+
+  void compaction(int level);
+
+  // utils
+  // return 2^n
+  static int pow2(int n);
+
+  // extract level from a path
+  static int getLevel(const string &path);
+
+ public:
+  explicit KVStore(const string &_storagePath);
+
+  ~KVStore();
+
+  void put(uint64_t key, const string &value) override;
+
+  string get(uint64_t key) override;
+
+  bool del(uint64_t key) override;
+
+  void reset() override;
+};
+
+#endif  // LSM_KV__KVSTORE_H_
