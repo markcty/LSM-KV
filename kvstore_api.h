@@ -42,4 +42,4 @@ class KVStoreAPI {
   virtual void reset() = 0;
 };
 
-#endif //LSM_KV__KVSTORE_API_H_
+#endif  // LSM_KV__KVSTORE_API_H_

@@ -1,10 +1,10 @@
 #ifndef LSM_KV__SKIPLIST_H_
 #define LSM_KV__SKIPLIST_H_
 
-#include <string>
-#include <stack>
-#include <utility>
 #include <random>
+#include <stack>
+#include <string>
+#include <utility>
 
 using namespace std;
 
@@ -56,6 +56,7 @@ class SkipList {
     const string &value();
     bool hasNext() const;
     void next();
+
    private:
     Node *p;
   };
@@ -63,4 +64,4 @@ class SkipList {
   ConstIterator constBegin() const;
 };
 
-#endif //LSM_KV__SKIPLIST_H_
+#endif  // LSM_KV__SKIPLIST_H_
