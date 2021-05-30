@@ -29,7 +29,7 @@ class PutDelayTest {
   explicit PutDelayTest(int max_, bool verbose_)
       : rd(), mt(rd()), max(max_), verbose(verbose_) {}
   vector<int> startTest() {
-    cout << ">>>>> Put Delay Test <<<<<" << endl;
+    cout << ">>>>> Put Test <<<<<" << endl;
 
     uniform_int_distribution<uint64_t> dist(1, 1024 * 1024 + 1000 * 1024);
 
@@ -151,7 +151,7 @@ class GetDelayTest {
       throughput[i] = 1 / avgTime[i] * 1000 * 1000;
     }
 
-    cout << ">>>>> Get Delay Test <<<<<" << endl;
+    cout << ">>>>> Get Test <<<<<" << endl;
     cout << "Average Delay And Throughput For Different Size Data: " << endl;
     cout << fixed << setprecision(2);
     cout << "0 ~ 0.25MB     : " << avgTime[0] << "ms "
@@ -215,7 +215,7 @@ class DeleteDelayTest {
       throughput[i] = 1 / avgTime[i] * 1000 * 1000;
     }
 
-    cout << ">>>>> Delete Delay Test <<<<<" << endl;
+    cout << ">>>>> Delete Test <<<<<" << endl;
     cout << "Average Delay And Throughput For Different Size Data: " << endl;
     cout << fixed << setprecision(2);
     cout << "0 ~ 0.25MB     : " << avgTime[0] << "ms "
