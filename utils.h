@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <windows.h>
 #endif
-#if defined(linux) || defined(__MINGW32__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__MINGW32__) || defined(__APPLE__)
 #include <dirent.h>
 #include <unistd.h>
 #endif
@@ -38,9 +38,9 @@ static inline bool dirExists(std::string path) {
  * @return files number.
  */
 #if defined(_WIN32) && !defined(__MINGW32__)
-int scanDir(std::string path, std::vector<std::string> &ret) {
+static inline int scanDir(std::string path, std::vector<std::string> &ret) {
   std::string extendPath;
-  if (path[path.length() - 1] == '/') {
+  if (path[path.size() - 1] == '/') {
     extendPath = path + "*";
   } else {
     extendPath = path + "/*";
@@ -60,10 +60,10 @@ int scanDir(std::string path, std::vector<std::string> &ret) {
     }
   }
   FindClose(h);
-  return ret.length();
+  return ret.size();
 }
 #endif
-#if defined(linux) || defined(__MINGW32__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__MINGW32__) || defined(__APPLE__)
 static inline int scanDir(std::string path, std::vector<std::string> &ret) {
   DIR *dir;
   struct dirent *rent;
@@ -118,7 +118,7 @@ static inline int mkdir(const char *path) {
  * @param path directory to be deleted.
  * @return 0 if delete successfully, -1 otherwise.
  */
-int rmdir(const char *path) {
+static inline int rmdir(const char *path) {
 #ifdef _WIN32
   return ::_rmdir(path);
 #else
