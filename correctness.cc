@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 
 #include "test.h"
@@ -36,15 +36,12 @@ class CorrectnessTest : public Test {
     phase();
 
     // Test deletions
-    for (i = 0; i < max; i += 2)
-      EXPECT(true, store.del(i));
+    for (i = 0; i < max; i += 2) EXPECT(true, store.del(i));
 
     for (i = 0; i < max; ++i)
-      EXPECT((i & 1) ? std::string(i + 1, 's') : not_found,
-             store.get(i));
+      EXPECT((i & 1) ? std::string(i + 1, 's') : not_found, store.get(i));
 
-    for (i = 1; i < max; ++i)
-      EXPECT(i & 1, store.del(i));
+    for (i = 1; i < max; ++i) EXPECT(i & 1, store.del(i));
 
     phase();
 
@@ -52,14 +49,13 @@ class CorrectnessTest : public Test {
   }
 
  public:
-  CorrectnessTest(const std::string &dir, bool v = true) : Test(dir, v) {
-  }
+  CorrectnessTest(const std::string &dir, bool v = true) : Test(dir, v) {}
 
   void start_test(void *args = NULL) override {
     std::cout << "KVStore Correctness Test" << std::endl;
 
     std::cout << "[Simple Test]" << std::endl;
-//    regular_test(SIMPLE_TEST_MAX);
+    //    regular_test(SIMPLE_TEST_MAX);
 
     std::cout << "[Large Test]" << std::endl;
     regular_test(LARGE_TEST_MAX);
