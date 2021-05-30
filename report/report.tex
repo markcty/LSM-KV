@@ -110,4 +110,40 @@ AMD R7 3700x with SSD in Ubuntu 20.04 LTS
 可以看到，三种不同的策略的吞吐量有显著区别。其中有无Bloom Filter在数据量较小时对性能影响较大，原因在于数据量较小时索引量较大，及时是二分查找也需要log(n)的时间，相比Bloom Filter的O(1)复杂度会逊色不少。值得一提的是，在无缓存的策略下，吞吐量反而随着数据量的大小上升而上升，猜测原因在于大数据量下一个SSTable中存的数据反而少，因此在索引过程所花费的时间反而较少。
 
 
+\subsection{Compaction对PUT操作影响测试}
+
+\subsubsection{测试方法}
+计算得出频率为每10次插入就需要1次compaction所需插入的数据大小，随后进行500次插入（即使compaction大约为50次），其中key的大小随机。
+
+\subsubsection{预期结果}
+随时间的增长，每次compaction所需时间也越长
+
+\subsubsection{测试结果}
+测试的结果如下：
+\begin{verbatim}
+    >>>>> Compaction Test <<<<<
+    1 puts per compaction, Delay: 16.88ms
+    5 puts per compaction, Delay: 3.45ms
+    10 puts per compaction, Delay: 1.75ms
+    25 puts per compaction, Delay: 0.6424ms
+    50 puts per compaction, Delay: 0.3092ms
+    100 puts per compaction, Delay: 0.1579ms
+    200 puts per compaction, Delay: 0.08545ms
+    400 puts per compaction, Delay: 0.048675ms
+    800 puts per compaction, Delay: 0.02995ms
+    1000 puts per compaction, Delay: 0.02588ms
+    no compaction, Delay: 0.0022835ms
+
+    >>>>> Summary <<<<<
+    It takes 23s to complete the test.
+\end{verbatim}
+
+\subsubsection{结果分析}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=8cm]{Compaction.png}
+  \caption{不同策略下的吞吐量}
+\end{figure}
+可以看到，compaction频率对
+
 \end{document}
