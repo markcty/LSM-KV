@@ -39,22 +39,22 @@ int main() {
   KVStore store(path);
   string value(remain / f, 's');
 
-  unsigned long long µs = 0;
+  unsigned long long mis = 0;
   int sec = 0;
   int ii = 0;
   for (int i = 0; i < f * 5000; i++) {
     auto s = high_resolution_clock::now();
     store.put(i, value);
     auto e = high_resolution_clock::now();
-    µs += duration_cast<microseconds>(e - s).count();
-    if (µs / 1000 / 1000 > sec) {
+    mis += duration_cast<microseconds>(e - s).count();
+    if (mis / 1000 / 1000 > sec) {
       cout << i - ii << endl;
       ii = i;
       sec++;
     }
   }
   cout << f << " puts per compaction, Delay: "
-       << µs / 1000 / 1000 / (double)(f * 100) << "ms" << endl;
+       << mis / 1000 / 1000 / (double)(f * 100) << "ms" << endl;
 
   // cout << "no compaction, ";
   // µs = 0;

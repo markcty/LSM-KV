@@ -27,7 +27,7 @@ class PutDelayTest {
 
  public:
   explicit PutDelayTest(int max_, bool verbose_)
-      : rd(), mt(rd()), max(max_), verbose(verbose_) {}
+      : max(max_), rd(), mt(rd()), verbose(verbose_) {}
   vector<int> startTest() {
     cout << ">>>>> Put Test <<<<<" << endl;
 
