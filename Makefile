@@ -5,8 +5,6 @@ all: correctness persistence
 
 correctness: SkipList.o SSTable.o kvstore.o correctness.o
 
-# correctness: SSTable.h SSTable.cpp SkipList.h SkipList.cpp  kvstore.cpp kvstore_api.h kvstore.h correctness.cc
-
 persistence: SkipList.o SSTable.o kvstore.o persistence.o
 
 clean:

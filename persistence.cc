@@ -79,6 +79,8 @@ class PersistenceTest : public Test {
         for (i = 0; i <= 1000; ++i) dummy = i;
 
         store.put(max + i, std::string(512, 'x'));
+
+        dummy++;
       }
     }
   }
@@ -164,7 +166,7 @@ int main(int argc, char *argv[]) {
   usage(argv[0], verbose ? "ON" : "OFF",
         testmode ? "Test Mode" : "Preparation Mode");
 
-  PersistenceTest test("../data", verbose);
+  PersistenceTest test("./data", verbose);
 
   test.start_test(static_cast<void *>(&testmode));
 

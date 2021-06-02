@@ -2,8 +2,8 @@
 
 KVStore::KVStore(const string &_storagePath)
     : KVStoreAPI(_storagePath),
-      timeStamp(0),
       storagePath(_storagePath),
+      timeStamp(0),
       fileNums(0) {
   ios_base::sync_with_stdio(false);  // turn off sync to accelerate
   // build cache
@@ -173,7 +173,7 @@ void KVStore::compaction(int level) {
 
   // read dictionaries from dics
   vector<SSTableDic> dics(compactionFiles.size());
-  for (int i = 0; i < k; i++) {
+  for (uint64_t i = 0; i < k; i++) {
     // read dic
     SSTable::readDic(compactionFiles[i], dics[i]);
     utils::rmfile(compactionFiles[i].c_str());
@@ -181,14 +181,14 @@ void KVStore::compaction(int level) {
   }
 
   // merge the dics, convert to SSTables
-  vector<int> indices(k);
+  vector<uint64_t> indices(k);
   SSTableDic mergedDic;
   uint64_t lastTimeStamp = 0;
   while (pairNum--) {
     // find the next pair to merge
     minKey = UINT64_MAX;
     auto minDic = 0;
-    for (int i = 0; i < k; i++) {
+    for (uint64_t i = 0; i < k; i++) {
       if (indices[i] < dics[i].size() &&
           dics[i].at(indices[i]).first < minKey) {
         minKey = dics[i].at(indices[i]).first;
@@ -233,7 +233,7 @@ void KVStore::compaction(int level) {
   }
 
   // delete cache
-  for (int i = 0; i < k; i++) {
+  for (uint64_t i = 0; i < k; i++) {
     // delete cache
     assert(cache.count(compactionFiles[i]));
     auto c = cache.at(compactionFiles[i]);

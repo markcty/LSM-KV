@@ -73,7 +73,7 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   vector<int> offsets;
   uint64_t key;
   int offset;
-  for (int i = 0; i < length; i++) {
+  for (uint64_t i = 0; i < length; i++) {
     read64(in, key);
     read32(in, offset);
     keys.push_back(key);
@@ -84,7 +84,7 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   offsets.push_back(offset);
 
   // read values
-  for (int i = 0; i < length; i++) {
+  for (uint64_t i = 0; i < length; i++) {
     auto valueSize = offsets[i + 1] - offsets[i];
     char *buf = new char[valueSize + 1];
     in.read(buf, valueSize);
@@ -155,7 +155,7 @@ string SSTable::get(const string &fileName, uint64_t key) {
 
   int offset = -1;
   int valueSize = -1;
-  for (int i = 0; i < length; i++) {
+  for (uint64_t i = 0; i < length; i++) {
     uint64_t _key;
     int _offset;
     read64(in, _key);
@@ -244,7 +244,7 @@ BloomFilter::BloomFilter() = default;
 
 SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp,
                            string _fileName)
-    : fileName(std::move(_fileName)), bloomFilter(memTable) {
+    : bloomFilter(memTable), fileName(std::move(_fileName)) {
   header.length = memTable.getLength();
   header.minKey = memTable.getMinKey();
   header.maxKey = memTable.getMaxKey();
@@ -262,7 +262,7 @@ SSTableCache::SSTableCache(const SkipList &memTable, uint64_t timeStamp,
 
 SSTableCache::SSTableCache(const SSTableDic &dic, uint64_t timeStamp,
                            string _fileName)
-    : fileName(std::move(_fileName)), bloomFilter(dic) {
+    : bloomFilter(dic), fileName(std::move(_fileName)) {
   header.length = dic.size();
   header.minKey = dic.front().first;
   header.maxKey = dic.back().first;
@@ -322,7 +322,7 @@ SSTableCache::SSTableCache(string _fileName) : fileName(std::move(_fileName)) {
 
   uint64_t key;
   int offset;
-  for (int i = 0; i < header.length; i++) {
+  for (uint64_t i = 0; i < header.length; i++) {
     SSTable::read64(in, key);
     SSTable::read32(in, offset);
     index.emplace_back(key, offset);
