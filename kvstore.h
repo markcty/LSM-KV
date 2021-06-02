@@ -1,6 +1,7 @@
 #ifndef LSM_KV__KVSTORE_H_
 #define LSM_KV__KVSTORE_H_
 
+#include <assert.h>
 #include <unistd.h>
 
 #include <algorithm>
@@ -11,6 +12,7 @@
 #include "SSTable.h"
 #include "SkipList.h"
 #include "kvstore_api.h"
+#include "utils.h"
 
 using namespace std;
 

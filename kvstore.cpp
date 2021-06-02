@@ -1,9 +1,5 @@
 #include "kvstore.h"
 
-#include <assert.h>
-
-#include "utils.h"
-
 KVStore::KVStore(const string &_storagePath)
     : KVStoreAPI(_storagePath),
       timeStamp(0),

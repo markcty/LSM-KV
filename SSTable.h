@@ -4,7 +4,9 @@
 #include <algorithm>
 #include <bitset>
 #include <fstream>
+#include <utility>
 
+#include "MurmurHash3.h"
 #include "SkipList.h"
 
 // Its ascending attribute must be promised by code

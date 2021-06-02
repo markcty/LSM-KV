@@ -1,9 +1,5 @@
 #include "SSTable.h"
 
-#include <utility>
-
-#include "MurmurHash3.h"
-
 void SSTable::toSSTable(const SkipList &memTable, const string &fileName,
                         uint64_t timeStamp) {
   ofstream out(fileName, ios::out | ios::binary | ios::trunc);

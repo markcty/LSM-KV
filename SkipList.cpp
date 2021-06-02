@@ -1,7 +1,5 @@
 #include "SkipList.h"
 
-#include <assert.h>
-
 SkipList::Node::Node(uint64_t _key, string _value, Node *_right, Node *_down)
     : right(_right), down(_down), key(_key), value(std::move(_value)) {}
 

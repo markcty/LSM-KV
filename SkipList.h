@@ -1,6 +1,8 @@
 #ifndef LSM_KV__SKIPLIST_H_
 #define LSM_KV__SKIPLIST_H_
 
+#include <assert.h>
+
 #include <random>
 #include <stack>
 #include <string>
