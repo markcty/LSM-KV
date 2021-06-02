@@ -9,7 +9,9 @@ persistence: SkipList.o SSTable.o kvstore.o persistence.o
 
 delay: SkipList.o SSTable.o kvstore.o delay.o
 
+compaction: SkipList.o SSTable.o kvstore.o compaction.o
+
 clean:
-	-rm -f correctness persistence delay *.o
+	-rm -f correctness persistence delay compaction *.o
 	-rm -rf data/*
 	-rm -rf peekSSTable out.txt
