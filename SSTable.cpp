@@ -60,8 +60,6 @@ void SSTable::readDic(const string &fileName, SSTableDic &dic) {
   ifstream in(fileName, ios_base::in | ios_base::binary);
   if (in.fail())
     throw runtime_error("readDic: Open file " + fileName + " failed!");
-  in.seekg(0, ifstream::end);
-  auto size = in.tellg();
 
   uint64_t length;
   in.seekg(8, ifstream::beg);  // skip timeStamp
