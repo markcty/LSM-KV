@@ -13,10 +13,13 @@ KVStore::KVStore(const string &_storagePath)
     vector<string> files;
     utils::scanDir(dir, files);
     for (const auto &file : files) {
-      auto fileName =
-          dir + "/" +
-          file;  // NOLINT(performance-inefficient-string-concatenation)}
-      cache.emplace(fileName, new SSTableCache(fileName));
+      auto fileName = dir + "/" + file;
+      auto fileCache = new SSTableCache(fileName);
+      cache.emplace(fileName, fileCache);
+
+      // check time stamp
+      if (fileCache->getHeader().timeStamp > timeStamp)
+        timeStamp = fileCache->getHeader().timeStamp + 1;
 
       // check file numbers to avoid duplicate file names
       fileNums = max(stoi(file) + 1, fileNums);
@@ -89,10 +92,7 @@ void KVStore::reset() {
   vector<string> files;
   int level = 0;
   while (utils::dirExists(dir) && utils::scanDir(dir, files) > 0) {
-    for (const auto &file : files)
-      utils::rmfile(
-          (dir + "/" + file)
-              .c_str());  // NOLINT(performance-inefficient-string-concatenation)
+    for (const auto &file : files) utils::rmfile((dir + "/" + file).c_str());
     dir = storagePath + "/level-" + to_string(++level);
     files.clear();
   }
