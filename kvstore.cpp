@@ -3,7 +3,7 @@
 KVStore::KVStore(const string &_storagePath)
     : KVStoreAPI(_storagePath),
       storagePath(_storagePath),
-      timeStamp(0),
+      timeStamp(1),
       fileNums(0) {
   ios_base::sync_with_stdio(false);  // turn off sync to accelerate
   // build cache

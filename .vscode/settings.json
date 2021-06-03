@@ -4,6 +4,7 @@
     "ostream": "cpp",
     "iostream": "cpp",
     "*.tcc": "cpp",
-    "cstdint": "cpp"
+    "cstdint": "cpp",
+    "ios": "cpp"
   }
 }
