@@ -19,3 +19,6 @@ add_executable(LSM_KV_DELAY MurmurHash3.h kvstore_api.h kvstore.h kvstore.cpp Sk
 add_executable(LSM_KV_COMPACTION MurmurHash3.h kvstore_api.h kvstore.h kvstore.cpp SkipList.cpp SkipList.h
         SSTable.h SSTable.cpp utils.h compaction.cpp)
 
+add_executable(LSM_KV_TRY MurmurHash3.h kvstore_api.h kvstore.h kvstore.cpp SkipList.cpp SkipList.h
+        SSTable.h SSTable.cpp utils.h try.cpp)
+

@@ -89,13 +89,19 @@ void KVStore::reset() {
 
   // clean all SSTables
   string dir = storagePath + "/level-0";
-  vector<string> files;
   int level = 0;
-  while (utils::dirExists(dir) && utils::scanDir(dir, files) > 0) {
+  while (utils::dirExists(dir)) {
+    vector<string> files;
+    utils::scanDir(dir, files);
     for (const auto &file : files) utils::rmfile((dir + "/" + file).c_str());
+    utils::rmdir(dir.c_str());
     dir = storagePath + "/level-" + to_string(++level);
     files.clear();
   }
+
+  // clear all cache
+  for (auto &c : cache) delete c.second;
+  cache.clear();
 }
 
 bool KVStore::overflow(unsigned long length, unsigned long valueSize) {

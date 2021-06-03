@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <iostream>
 #include <map>
 #include <queue>
 #include <string>
@@ -43,7 +44,7 @@ class KVStore : public KVStoreAPI {
  public:
   explicit KVStore(const string &_storagePath);
 
-  ~KVStore();
+  virtual ~KVStore();
 
   void put(uint64_t key, const string &value) override;
 
