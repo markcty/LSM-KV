@@ -25,13 +25,14 @@ LSM Tree(Log-structure Merge Tree)数据结构，于1996年在Patrick O’Neil �
 
 \section{测试}
 
-\subsection{测试环境}
-AMD R7 3700x with SSD in Ubuntu 20.04 LTS
+\subsection{测试环境和脚本说明}
+AMD R7 3700x with SSD in Ubuntu 20.04 LTS\\
+测试的两个脚本在delay.cpp与compaction.cpp中，使用make delay和make compaction来编译。
 
 \subsection{性能测试}
 
 \subsubsection{测试方法}
-插入1000个随机大小在1 Byte到近2 MB的字符串（总数据量大约再1G左右），随后打乱所有keys，执行GET操作，再打乱所有keys，执行DELETE操作。重复上述方法连续测试三次，测试各方法的平均延时和吞吐。
+插入1000个随机大小在1 Byte到近2 MB的字符串（总数据量大约在1G左右），随后打乱所有keys，执行GET操作，再打乱所有keys，执行DELETE操作。重复上述方法连续测试三次，测试各方法的平均延时和吞吐。
 \subsubsection{预期结果}
 \begin{enumerate}
   \item 对每次测试：测试结果应该相近。
@@ -114,7 +115,7 @@ AMD R7 3700x with SSD in Ubuntu 20.04 LTS
 \subsection{Compaction对PUT操作影响测试}
 
 \subsubsection{测试方法}
-计算得出频率为每10次插入就需要1次compaction所需插入的数据大小，随后进行5000次插入（即使compaction大约5000次，数据量在10G左右），其中key的大小随机。测试脚本在compaction\_test分支中。
+计算得出频率为每10次插入就需要1次compaction所需插入的数据大小，随后进行5000次插入（即使compaction大约5000次，数据量在10G左右），其中key的大小随机。测试脚本在compaction.cpp中。
 
 \subsubsection{预期结果}
 随时间的增长，因为层数的增加，每次compaction所需时间也越长。
@@ -128,7 +129,7 @@ AMD R7 3700x with SSD in Ubuntu 20.04 LTS
 \end{figure}
 
 \subsubsection{结果分析}
-可以看到，吞吐量随时间的变化在局部上，呈现锯齿状，猜测每触发一次跨度较大的compaction就会导致该秒内吞吐量骤减；总体来说，呈阶梯状递减趋势，猜测每个阶梯就代表了储存层数的增加。
+可以看到，吞吐量随时间降低。在局部上，呈现锯齿状，猜测每触发一次跨度较大的compaction就会导致该秒内吞吐量骤减；总体来说，呈阶梯状递减趋势，猜测每个阶梯就代表了储存层数的增加。
 
 
 \subsection{结论}
