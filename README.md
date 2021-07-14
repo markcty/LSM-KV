@@ -1,1 +1,13 @@
-## Project 1: KVStore using Log-structured Merge TreeThe handout files include two main parts:- The `KVStoreAPI` class in `kvstore_api.h` that specifies the interface of KVStore.- Test files including correctness test (`correctness.cc`) and persistence test (`persistence.cc`).Explanation of each handout file:```text.├── Makefile  // Makefile if you use GNU Make├── README.md // This readme file├── correctness.cc // Correctness test, you should not modify this file├── data      // Data directory used in our test├── kvstore.cc     // your implementation├── kvstore.h      // your implementation├── kvstore_api.h  // KVStoreAPI, you should not modify this file├── persistence.cc // Persistence test, you should not modify this file├── utils.h         // Provides some cross-platform file/directory interface├── MurmurHash3.h  // Provides murmur3 hash function└── test.h         // Base class for testing, you should not modify this file```First have a look at the `kvstore_api.h` file to check functions you need to implement. Then modify the `kvstore.cc` and `kvstore.h` files and feel free to add new class files.We will use all files with `.cc`, `.cpp`, `.cxx` suffixes to build correctness and persistence tests. Thus, you can use any IDE to finish this project as long as you ensure that all C++ source files are submitted.For the test files, of course you could modify it to debug your programs. But remember to change it back when you are testing.Good luck :)
+## Data structure project 2: KVStore using Log-structured Merge Tree
+
+LSM Tree(Log-structure Merge Tree)数据结构，于 1996 年在 Patrick O’Neil 等人的一篇论文提出。其通过 SS-Table 的多层储存结构，利用磁盘顺序读写的高效性，实现了性能极高的写操作。LSM Tree 被广泛地在各种 NoSQL 中使用，比如 HBase，LevelDB 等。
+
+LSM Tree 键值存储系统分为内存存储和硬盘存储两部分，内存部分使用跳表或平衡树（本项目使用跳表实现）。
+
+硬盘存储采用分层存储的方式进行存储，每一层中包括多个文件，每个文件被称为 SSTable（Sorted Strings Table），用于有序地存储多个键值对（Key-Value Pairs）， 该项目中一个 SSTable 的大小为 2 MB 。
+
+SSTable 是保存在磁盘中的，而磁盘的读写速度比内存要慢几个数量级。因此在查找时，去磁盘读取 SSTable 的 Bloom Filter 和索引是很耗时的操作。为了避免多次磁盘的读取操作，我们可以 将 SSTable 中除了数据区外的 其他部分缓存在内存中 。
+
+当插入一个键值对触发伐值（内存中保存数据到达 2MB），会触发 compaction 操作，将内存中的数据写入硬盘，若当前层满了，则会递归地向更高层写数据。
+
+具体细节见 pdf 文档，性能测试报告见 report 目录下的 latex。
